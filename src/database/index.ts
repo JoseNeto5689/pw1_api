@@ -1,5 +1,7 @@
 import { Sequelize } from "sequelize"
 
-const sequelize = new Sequelize("postgres://admin:123@localhost:5432/main")
+const db_url: string = process.env.DATABASE_URL || "" 
+
+const sequelize = new Sequelize(db_url)
 
 export default sequelize

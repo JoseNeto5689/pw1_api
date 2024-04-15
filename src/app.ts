@@ -2,6 +2,7 @@ import app from "./config"
 import dotenv from "dotenv"
 import sequelize from "./database"
 
+
 dotenv.config()
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
 
