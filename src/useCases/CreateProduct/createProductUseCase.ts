@@ -1,1 +1,0 @@
-"Descreva aqui o useCase da rota"

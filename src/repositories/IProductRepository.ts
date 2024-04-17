@@ -1,4 +1,5 @@
+import { Product } from "../types/Product";
+
 export interface IProductRepository {
-    findAll(): Promise<unknown[]>;
-    findOne(): Promise<Record<string, never>>
+    save(product:Product): Promise<void>
 }
