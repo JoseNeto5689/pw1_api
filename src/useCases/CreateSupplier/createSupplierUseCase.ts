@@ -9,7 +9,7 @@ export class CreateSupplierUseCase {
         private supplierRepository: ISupplierRepository
     ) {}
 
-    execute = async(data: ISupplierRequestDTO) => {
+    async execute(data: ISupplierRequestDTO) {
         const supplier = new Supplier(data)
         await this.supplierRepository.save(supplier)
     }

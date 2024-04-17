@@ -3,6 +3,6 @@ import { createSupplierController } from "../useCases/CreateSupplier"
 
 const router: Router = Router()
 
-router.post("/supplier", createSupplierController.handle)
+router.post("/supplier", (request, response) => createSupplierController.handle(request, response))
 
 export default router

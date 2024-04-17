@@ -7,7 +7,7 @@ export class CreateSupplierController {
         private createSupplierUseCase: CreateSupplierUseCase,
     ) {}
 
-    handle = (async (request: Request, reponse: Response) => {
+    async handle (request: Request, reponse: Response) {
         const {name}:{name:string} = request.body
         await this.createSupplierUseCase.execute({
             name,
@@ -16,5 +16,5 @@ export class CreateSupplierController {
         })
 
         return reponse.json("ok")
-    })//.bind(this)
+    }
 }
