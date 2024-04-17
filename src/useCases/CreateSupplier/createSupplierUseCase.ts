@@ -1,6 +1,7 @@
-import { ISupplierRepository } from "../../repositories/ISupplierRepository";
-import { Supplier } from "../../types/Supplier";
-import { ISupplierRequestDTO } from "./createSupplierDTO";
+"use strict"
+import { ISupplierRepository } from "../../repositories/ISupplierRepository"
+import { Supplier } from "../../types/Supplier"
+import { ISupplierRequestDTO } from "./createSupplierDTO"
 
 export class CreateSupplierUseCase {
 
@@ -8,8 +9,8 @@ export class CreateSupplierUseCase {
         private supplierRepository: ISupplierRepository
     ) {}
 
-    async execute(data: ISupplierRequestDTO) {
+    execute = async(data: ISupplierRequestDTO) => {
         const supplier = new Supplier(data)
-        this.supplierRepository.save(supplier)
+        await this.supplierRepository.save(supplier)
     }
 }

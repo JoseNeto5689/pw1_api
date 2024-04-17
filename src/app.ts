@@ -1,6 +1,7 @@
+import sequelize  from "./database/connection"
 import app from "./config"
 import dotenv from "dotenv"
-import sequelize  from "./database/connection"
+
 
 dotenv.config()
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
@@ -8,7 +9,7 @@ const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
 
 try {
     await sequelize.authenticate()
-    await sequelize.sync({ force: true })
+    //await sequelize.sync({ force: true })
 
     // const Supplier = sequelize.models.Supplier
     // const Product = sequelize.models.Product

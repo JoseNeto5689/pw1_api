@@ -1,4 +1,4 @@
-import { Supplier } from "../types/Supplier";
+import { Supplier } from "../types/Supplier"
 
 export interface ISupplierRepository {
     save(supplier:Supplier): Promise<void>

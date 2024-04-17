@@ -1,11 +1,14 @@
 import { Product } from "../../types/Product"
 import { IProductRepository } from "../IProductRepository"
-import sequelize from "../../database/connection"
 
 export class SequelizeProductRepository implements IProductRepository {
-
-    async save(product: Product): Promise<void> {
-        sequelize.models.Product
+    save(product: Product): Promise<void> {
+        console.log(product)
+        throw new Error("Method not implemented.")
     }
+
+    /*async save(product: Product): Promise<void> {
+        sequelize.models.Product
+    }*/
 
 }

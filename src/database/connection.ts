@@ -9,5 +9,4 @@ const sequelize = new Sequelize({
     models: [__dirname + "/models"]
 })
 
-
 export default sequelize

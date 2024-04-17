@@ -1,4 +1,4 @@
-import { Product } from "../types/Product";
+import { Product } from "../types/Product"
 
 export interface IProductRepository {
     save(product:Product): Promise<void>
