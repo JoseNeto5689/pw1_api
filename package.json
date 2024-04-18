@@ -23,7 +23,6 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@swc/core": "^1.4.15",
     "@types/sequelize": "^4.28.20",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

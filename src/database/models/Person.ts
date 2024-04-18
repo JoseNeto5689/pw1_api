@@ -28,7 +28,7 @@ class Person extends Model {
 
     @Column({
         type: DataType.GEOGRAPHY,
-        allowNull: false
+        allowNull: true
     })
     declare address: string
 
@@ -40,7 +40,7 @@ class Person extends Model {
 
     @Column({
         type: DataType.ARRAY(DataType.STRING),
-        allowNull: false
+        allowNull: true
     })
     declare contact: string[]
 
