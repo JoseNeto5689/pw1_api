@@ -1,0 +1,16 @@
+"use strict"
+import { IProductRepository } from "../../repositories/IProductRepository"
+import { Product } from "../../types/Product"
+import { IProductRequestDTO } from "./createProductDTO"
+
+export class CreateProductUseCase {
+
+    constructor(
+        private productRepository: IProductRepository
+    ) {}
+
+    async execute(data: IProductRequestDTO) {
+        const product = new Product(data)
+        await this.productRepository.save(product)
+    }
+}
