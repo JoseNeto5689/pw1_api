@@ -6,9 +6,7 @@ export class SequelizeSupplierRepository implements ISupplierRepository {
 
     async save(supplier: Supplier): Promise<void> {
         await sequelize.models.Supplier.create({
-            name: supplier.name,
-            image: supplier.image,
-            geolocalization: supplier.geolocalization
+            ...supplier
         })
     }
 

@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { CreateSupplierUseCase } from "./createSupplierUseCase"
+import { ISupplierRequestDTO } from "./createSupplierDTO"
 
 export class CreateSupplierController {
     
@@ -8,13 +9,13 @@ export class CreateSupplierController {
     ) {}
 
     async handle (request: Request, reponse: Response) {
-        const {name}:{name:string} = request.body
+        const data:ISupplierRequestDTO = request.body
+        
         await this.createSupplierUseCase.execute({
-            name,
-            geolocalization: undefined,
-            image: undefined
+            ...data
         })
 
         return reponse.json("ok")
+        
     }
 }

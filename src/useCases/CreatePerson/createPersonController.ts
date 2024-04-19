@@ -10,15 +10,13 @@ export class CreatePersonController{
 
     async handle (request: Request, reponse: Response) {
 
-        const {name, address, type, contact}:IPersonRequestDTO
-         = request.body
+        const data:IPersonRequestDTO = request.body
+
         await this.createPersonUseCase.execute({
-            name,
-            address,
-            type,
-            contact
+            ...data
         })
 
         return reponse.json("ok")
+        
     }
 }

@@ -10,22 +10,13 @@ export class CreateProductController{
 
     async handle (request: Request, reponse: Response) {
 
-        const {name, description, price, batch, manufacturing_date, 
-            expiration_date, image, ammount, type, supplier_id}:IProductRequestDTO
-         = request.body
+        const data:IProductRequestDTO = request.body
+
         await this.createProductUseCase.execute({
-            name,
-            description,
-            price,
-            batch,
-            manufacturing_date,
-            expiration_date,
-            image,
-            ammount,
-            type,
-            supplier_id,
+            ...data
         })
 
         return reponse.json("ok")
+        
     }
 }
