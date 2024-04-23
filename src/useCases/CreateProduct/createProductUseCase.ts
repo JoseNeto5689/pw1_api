@@ -1,4 +1,3 @@
-"use strict"
 import { IProductRepository } from "../../repositories/IProductRepository"
 import { Product } from "../../types/Product"
 import { IProductRequestDTO } from "./createProductDTO"

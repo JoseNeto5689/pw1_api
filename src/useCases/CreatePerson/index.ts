@@ -1,9 +1,9 @@
-import { SequelizePersonRepository } from "../../repositories/implementations/SequelizePersonRepository"
+import { PersonRepository } from "../../repositories/implementations/PersonRepository"
 import { CreatePersonController } from "./createPersonController"
 import { CreatePersonUseCase } from "./createPersonUseCase"
 
-const sequelizePersonRepository = new SequelizePersonRepository()
-const createPersonUseCase = new CreatePersonUseCase(sequelizePersonRepository)
+const personRepository = new PersonRepository()
+const createPersonUseCase = new CreatePersonUseCase(personRepository)
 const createPersonController = new CreatePersonController(createPersonUseCase)
 
 export { createPersonUseCase, createPersonController }

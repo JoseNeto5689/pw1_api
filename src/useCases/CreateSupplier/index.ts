@@ -1,11 +1,11 @@
-import { SequelizeSupplierRepository } from "../../repositories/implementations/SequelizeSupplierRepository"
+import { SupplierRepository } from "../../repositories/implementations/SupplierRepository"
 import { CreateSupplierUseCase } from "./createSupplierUseCase"
 import { CreateSupplierController } from "./createSupplierController"
 
 
-const sequelizeSupplierRepository = new SequelizeSupplierRepository()
+const supplierRepository = new SupplierRepository()
 
-const createSupplierUseCase = new CreateSupplierUseCase(sequelizeSupplierRepository)
+const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository)
 
 const createSupplierController = new CreateSupplierController(createSupplierUseCase)
 

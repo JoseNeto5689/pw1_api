@@ -1,4 +1,3 @@
-"use strict"
 import { ISupplierRepository } from "../../repositories/ISupplierRepository"
 import { Supplier } from "../../types/Supplier"
 import { ISupplierRequestDTO } from "./createSupplierDTO"
