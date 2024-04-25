@@ -5,6 +5,7 @@ import { createPersonController } from "../useCases/CreatePerson"
 import { createSupplyController } from "../useCases/CreateSupply"
 import { findAllPersonController } from "../useCases/FindAllPerson"
 import { findAllSuppliersController } from "../useCases/FindAllSupplier"
+import { findAllProductsController } from "../useCases/findAllProduct"
 
 const router: Router = Router()
 
@@ -15,6 +16,7 @@ router.post("/supply", (request, response) => createSupplyController.handle(requ
 
 router.get("/supplier", (request, response) => findAllSuppliersController.handle(request, response)) 
 router.get("/person", (request, response) => findAllPersonController.handle(request, response))
+router.get("/product", (request, response) => findAllProductsController.handle(request, response))
 
 
 export default router
