@@ -3,8 +3,18 @@ import { Product } from "../../types/Product"
 import { IProductRepository } from "../IProductRepository"
 
 export class ProductRepository implements IProductRepository {
-    async findAll(): Promise<unknown> {
-        const products = await sequelize.models.Product.findAll()
+    
+    async findById(id: string): Promise<Product | null> {
+        const result: Product | null = await sequelize.models.Product.findByPk(id) as Product | null
+        return result
+    }
+
+    async findAll(): Promise<Product[]> {
+        const result = await sequelize.models.Product.findAll()
+        const products: Product[] = []
+        result.forEach((product: any) => {
+            products.push(product)
+        })
         return products
     }
     

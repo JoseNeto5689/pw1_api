@@ -3,8 +3,17 @@ import { Supply } from "../../types/Supply"
 import { ISupplyRepository } from "../ISupplyRepository"
 
 export class SupplyRepository implements ISupplyRepository {
-    async findAll(): Promise<unknown> {
-        const supplies = await sequelize.models.Supply.findAll()
+    
+    async findById(id: string): Promise<Supply | null> {
+        const result: Supply | null = await sequelize.models.Supply.findByPk(id) as Supply | null
+        return result
+    }
+    async findAll(): Promise<Supply[]> {
+        const result = await sequelize.models.Supply.findAll()
+        const supplies: Supply[] = []
+        result.forEach((supply: any) => {
+            supplies.push(supply)
+        })
         return supplies
     }
     
