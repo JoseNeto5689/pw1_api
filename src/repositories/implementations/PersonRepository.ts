@@ -4,6 +4,14 @@ import { IPersonRepository } from "../IPersonRepository"
 
 export class PersonRepository implements IPersonRepository {
 
+    async remove(id: string): Promise<void> {
+        await sequelize.models.Person.destroy({
+            where: {
+                id: id
+            }
+        })
+    }
+
     async findById(id: string): Promise<Person | null> {
         const result: Person | null = await sequelize.models.Person.findByPk(id) as Person | null
         return result

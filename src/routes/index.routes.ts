@@ -11,6 +11,7 @@ import { findByIdPersonController } from "../useCases/FindByIdPerson"
 import { findByIdSupplierController } from "../useCases/FindByIdSupplier"
 import { findByIdProductController } from "../useCases/FindByIdProduct"
 import { findByIdSupplyController } from "../useCases/FindByIdSupply"
+import { deletePersonController } from "../useCases/DeletePerson"
 
 const router: Router = Router()
 
@@ -28,6 +29,8 @@ router.get("/supplier/:id", (request, response) => findByIdSupplierController.ha
 router.get("/person/:id", (request, response) => findByIdPersonController.handle(request, response))
 router.get("/product/:id", (request, response) => findByIdProductController.handle(request, response))
 router.get("/supply/:id", (request, response) => findByIdSupplyController.handle(request, response))
+
+router.delete("/person/:id", (request, response) => deletePersonController.handle(request, response))
 
 
 export default router
