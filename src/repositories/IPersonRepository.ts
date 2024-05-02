@@ -5,4 +5,5 @@ export interface IPersonRepository {
     findAll(): Promise<Person[]>
     findById(id: string): Promise<Person | null>
     remove(id: string): Promise<void>
+    update(person: Person, id: string): Promise<void>
 }

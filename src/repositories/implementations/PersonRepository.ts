@@ -4,6 +4,17 @@ import { IPersonRepository } from "../IPersonRepository"
 
 export class PersonRepository implements IPersonRepository {
 
+    async update(person: Person, id: string): Promise<void> {
+        await sequelize.models.Person.update({
+            ...person
+        }, {
+            where: {
+                id: id
+            }
+        })
+    }
+
+
     async remove(id: string): Promise<void> {
         await sequelize.models.Person.destroy({
             where: {
