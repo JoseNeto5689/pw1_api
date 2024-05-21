@@ -1,5 +1,5 @@
 export class Product {
-    public readonly bar_code!: string //Observar depois tipo correto para código de barras
+    public readonly barcode!: string //Observar depois tipo correto para código de barras
     public name!: string
     public description: string | undefined
     public price!: number
@@ -11,11 +11,11 @@ export class Product {
     public type!: string
     public supplier_id!: string
 
-    constructor(props: Omit<Product, "bar_code">, bar_code?: string) {
+    constructor(props: Omit<Product, "bar_code">, barcode?: string) {
         Object.assign(this, props)
 
-        if(bar_code){
-            this.bar_code = bar_code
+        if(barcode){
+            this.barcode = barcode
         }
     }
 }

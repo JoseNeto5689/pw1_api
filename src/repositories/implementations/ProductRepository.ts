@@ -23,4 +23,22 @@ export class ProductRepository implements IProductRepository {
             ...product
         })
     }
+
+    async remove(barcode: string): Promise<void> {
+        await sequelize.models.Product.destroy({
+            where: {
+                barcode
+            }
+        })
+    }
+
+    async update(product: Product, barcode: string): Promise<void> {
+        await sequelize.models.Product.update({
+            ...product
+        }, {
+            where: {
+                barcode
+            }
+        })
+    }
 }

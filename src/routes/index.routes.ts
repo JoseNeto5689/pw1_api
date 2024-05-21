@@ -1,4 +1,4 @@
-import { Router } from "express"
+import { Router, response } from "express"
 import { createSupplierController } from "../useCases/CreateSupplier"
 import { createProductController } from "../useCases/CreateProduct"
 import { createPersonController } from "../useCases/CreatePerson"
@@ -12,7 +12,9 @@ import { findByIdSupplierController } from "../useCases/FindByIdSupplier"
 import { findByIdProductController } from "../useCases/FindByIdProduct"
 import { findByIdSupplyController } from "../useCases/FindByIdSupply"
 import { deletePersonController } from "../useCases/DeletePerson"
-import { updatePersonController } from "../useCases/updatePerson"
+import { updatePersonController } from "../useCases/UpdatePerson"
+import { deleteProductController } from "../useCases/DeleteProduct"
+import { updateProductController } from "../useCases/UpdateProduct"
 
 const router: Router = Router()
 
@@ -32,7 +34,9 @@ router.get("/product/:id", (request, response) => findByIdProductController.hand
 router.get("/supply/:id", (request, response) => findByIdSupplyController.handle(request, response))
 
 router.delete("/person/:id", (request, response) => deletePersonController.handle(request, response))
+router.delete("/product/:id", (request, response) => deleteProductController.handle(request, response))
 
 router.put("/person/:id", (request, response) => updatePersonController.handle(request, response))
+router.put("/product/:id", (request, response) => updateProductController.handle(request, response))
 
 export default router
