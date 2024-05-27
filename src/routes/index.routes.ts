@@ -23,6 +23,7 @@ import { deleteSupplyController } from "../useCases/DeleteSupply"
 import { updatePersonController } from "../useCases/UpdatePerson"
 import { updateProductController } from "../useCases/UpdateProduct"
 import { updateSupplierController } from "../useCases/updateSupplier"
+import { updateSupplyController } from "../useCases/updateSupply"
 
 const router: Router = Router()
 
@@ -49,5 +50,6 @@ router.delete("/supply/:id", (request, response) => deleteSupplyController.handl
 router.put("/person/:id", (request, response) => updatePersonController.handle(request, response))
 router.put("/product/:id", (request, response) => updateProductController.handle(request, response))
 router.put("/supplier/:id", (request, response) => updateSupplierController.handle(request, response))
+router.put("/supply/:id", (request, response) => updateSupplyController.handle(request, response))
 
 export default router
