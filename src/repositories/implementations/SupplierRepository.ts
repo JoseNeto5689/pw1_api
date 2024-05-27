@@ -32,4 +32,14 @@ export class SupplierRepository implements ISupplierRepository {
         })
     }
 
+    async update(supplier: Supplier, id: string): Promise<void> {
+        await sequelize.models.Supplier.update({
+            ...supplier
+        }, {
+            where: {
+                id
+            }
+        })
+    }
+
 }

@@ -1,23 +1,28 @@
 import { Router, response } from "express"
+
 import { createSupplierController } from "../useCases/CreateSupplier"
 import { createProductController } from "../useCases/CreateProduct"
 import { createPersonController } from "../useCases/CreatePerson"
 import { createSupplyController } from "../useCases/CreateSupply"
+
 import { findAllPersonController } from "../useCases/FindAllPerson"
 import { findAllSuppliersController } from "../useCases/FindAllSupplier"
 import { findAllProductsController } from "../useCases/FindAllProduct"
 import { findAllSuppliesController } from "../useCases/FindAllSupply"
+
 import { findByIdPersonController } from "../useCases/FindByIdPerson"
 import { findByIdSupplierController } from "../useCases/FindByIdSupplier"
 import { findByIdProductController } from "../useCases/FindByIdProduct"
 import { findByIdSupplyController } from "../useCases/FindByIdSupply"
-import { deletePersonController } from "../useCases/DeletePerson"
-import { updatePersonController } from "../useCases/UpdatePerson"
-import { deleteProductController } from "../useCases/DeleteProduct"
-import { updateProductController } from "../useCases/UpdateProduct"
 
+import { deletePersonController } from "../useCases/DeletePerson"
+import { deleteProductController } from "../useCases/DeleteProduct"
 import { deleteSupplierController } from "../useCases/DeleteSupplier"
 import { deleteSupplyController } from "../useCases/DeleteSupply"
+
+import { updatePersonController } from "../useCases/UpdatePerson"
+import { updateProductController } from "../useCases/UpdateProduct"
+import { updateSupplierController } from "../useCases/updateSupplier"
 
 const router: Router = Router()
 
@@ -43,5 +48,6 @@ router.delete("/supply/:id", (request, response) => deleteSupplyController.handl
 
 router.put("/person/:id", (request, response) => updatePersonController.handle(request, response))
 router.put("/product/:id", (request, response) => updateProductController.handle(request, response))
+router.put("/supplier/:id", (request, response) => updateSupplierController.handle(request, response))
 
 export default router
