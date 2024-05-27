@@ -24,4 +24,12 @@ export class SupplierRepository implements ISupplierRepository {
         })
     }
 
+    async remove(id: string): Promise<void> {
+        await sequelize.models.Supplier.destroy({
+            where: {
+                id
+            }
+        })
+    }
+
 }
