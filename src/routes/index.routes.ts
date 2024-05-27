@@ -17,6 +17,7 @@ import { deleteProductController } from "../useCases/DeleteProduct"
 import { updateProductController } from "../useCases/UpdateProduct"
 
 import { deleteSupplierController } from "../useCases/DeleteSupplier"
+import { deleteSupplyController } from "../useCases/DeleteSupply"
 
 const router: Router = Router()
 
@@ -38,6 +39,7 @@ router.get("/supply/:id", (request, response) => findByIdSupplyController.handle
 router.delete("/person/:id", (request, response) => deletePersonController.handle(request, response))
 router.delete("/product/:id", (request, response) => deleteProductController.handle(request, response))
 router.delete("/supplier/:id", (request, response) => deleteSupplierController.handle(request, response))
+router.delete("/supply/:id", (request, response) => deleteSupplyController.handle(request, response))
 
 router.put("/person/:id", (request, response) => updatePersonController.handle(request, response))
 router.put("/product/:id", (request, response) => updateProductController.handle(request, response))
