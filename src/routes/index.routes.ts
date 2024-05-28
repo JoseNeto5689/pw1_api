@@ -1,4 +1,4 @@
-import { Router, response } from "express"
+import { Router } from "express"
 
 import { createSupplierController } from "../useCases/CreateSupplier"
 import { createProductController } from "../useCases/CreateProduct"
@@ -22,8 +22,8 @@ import { deleteSupplyController } from "../useCases/DeleteSupply"
 
 import { updatePersonController } from "../useCases/UpdatePerson"
 import { updateProductController } from "../useCases/UpdateProduct"
-import { updateSupplierController } from "../useCases/updateSupplier"
-import { updateSupplyController } from "../useCases/updateSupply"
+import { updateSupplierController } from "../useCases/UpdateSupplier"
+import { updateSupplyController } from "../useCases/UpdateSupply"
 
 const router: Router = Router()
 
