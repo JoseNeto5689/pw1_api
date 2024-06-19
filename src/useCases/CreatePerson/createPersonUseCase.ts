@@ -1,6 +1,6 @@
 import { IPersonRepository } from "../../repositories/IPersonRepository"
 import { Person } from "../../types/Person"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 //import { IPersonRequestDTO } from "./createPersonDTO"
 
 export class CreatePersonUseCase {

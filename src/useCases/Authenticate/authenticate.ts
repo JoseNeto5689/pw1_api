@@ -1,7 +1,7 @@
 import GenerateToken from "../../providers/GenerateToken"
 import { Request, Response } from "express"
 import { IPersonRepository } from "../../repositories/IPersonRepository"
-import bcrypt from 'bcrypt'
+import bcrypt from "bcryptjs"
 
 
 interface IRequest {
@@ -21,7 +21,6 @@ class AuthenticateUser {
             if (!user) {
                 return res.status(401).json({ status: "This user is not registered" })
             }
- 
             const passwordMatch = await bcrypt.compare(password, user.password)
 
             if(!passwordMatch) {
