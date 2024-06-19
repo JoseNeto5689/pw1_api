@@ -3,6 +3,17 @@ import { Person } from "../../types/Person"
 import { IPersonRepository } from "../IPersonRepository"
 
 export class PersonRepository implements IPersonRepository {
+    async findByName(name: string): Promise<Person | null> {
+        console.log(name)
+        const person = await sequelize.models.Person.findOne({
+            where: {
+                name: name
+            }
+        })
+
+
+        return person as Person | null
+    }
 
     async update(person: Person, id: string): Promise<void> {
         await sequelize.models.Person.update({

@@ -1,6 +1,6 @@
 import { IProductRepository } from "../../repositories/IProductRepository"
 import { Product } from "../../types/Product"
-import { IProductRequestDTO } from "./createProductDTO"
+//import { IProductRequestDTO } from "./createProductDTO"
 
 export class CreateProductUseCase {
 
@@ -8,7 +8,7 @@ export class CreateProductUseCase {
         private productRepository: IProductRepository
     ) {}
 
-    async execute(data: IProductRequestDTO) {
+    async execute(data: any) {
         const product = new Product(data)
         await this.productRepository.save(product)
     }

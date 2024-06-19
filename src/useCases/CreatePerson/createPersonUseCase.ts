@@ -1,6 +1,6 @@
 import { IPersonRepository } from "../../repositories/IPersonRepository"
 import { Person } from "../../types/Person"
-import { IPersonRequestDTO } from "./createPersonDTO"
+//import { IPersonRequestDTO } from "./createPersonDTO"
 
 export class CreatePersonUseCase {
 
@@ -8,7 +8,7 @@ export class CreatePersonUseCase {
         private personRepository: IPersonRepository
     ) {}
 
-    async execute(data: IPersonRequestDTO) {
+    async execute(data: any) {
         const person = new Person(data)
         await this.personRepository.save(person)
     }

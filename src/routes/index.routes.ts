@@ -25,7 +25,16 @@ import { updateProductController } from "../useCases/UpdateProduct"
 import { updateSupplierController } from "../useCases/UpdateSupplier"
 import { updateSupplyController } from "../useCases/UpdateSupply"
 
+import EnsureAuthenticate from "../middlewares/EnsureAuthenticate"
+import { authenticateUser } from "../useCases/Authenticate"
+
 const router: Router = Router()
+
+router.get("/", EnsureAuthenticate.handle, (request, response) => {
+    return response.json({ message: "Hello, world!" })
+})
+
+router.post("/auth",  (req, res) => {authenticateUser.handle(req, res) })
 
 router.post("/supplier", (request, response) => createSupplierController.handle(request, response))
 router.post("/product", (request, response) => createProductController.handle(request, response))
