@@ -1,3 +1,4 @@
+import { password } from "bun"
 import { z } from "zod"
 
 export const CreatePersonDTO = z.object({
@@ -11,4 +12,8 @@ export const CreatePersonDTO = z.object({
         invalid_type_error: "Type must be a string",
     }),
     contact: z.array(z.string()).optional(),
+    password: z.string({
+        required_error: "Password is required",
+        invalid_type_error: "Password must be a string",
+    })
 })

@@ -4,7 +4,6 @@ import { IPersonRepository } from "../IPersonRepository"
 
 export class PersonRepository implements IPersonRepository {
     async findByName(name: string): Promise<Person | null> {
-        console.log(name)
         const person = await sequelize.models.Person.findOne({
             where: {
                 name: name

@@ -1,5 +1,6 @@
 import { IPersonRepository } from "../../repositories/IPersonRepository"
 import { Person } from "../../types/Person"
+import bcrypt from "bcrypt"
 //import { IPersonRequestDTO } from "./createPersonDTO"
 
 export class CreatePersonUseCase {
@@ -9,7 +10,12 @@ export class CreatePersonUseCase {
     ) {}
 
     async execute(data: any) {
-        const person = new Person(data)
+        const password = await bcrypt.hash(data.password, 8)
+
+        const person = new Person({
+            ...data,
+            password
+        })
         await this.personRepository.save(person)
     }
 }
