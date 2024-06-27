@@ -11,8 +11,8 @@ export const CreateProductDTO = z.object({
         invalid_type_error: "Price must be a number",
     }),
     batch: z.string().optional(),
-    manufacturing_date: z.date().optional(),
-    expiration_date: z.date().optional(),
+    manufacturing_date: z.string().optional(),
+    expiration_date: z.string().optional(),
     image: z.string().optional(),
     ammount: z.number({
         required_error: "Ammount is required",

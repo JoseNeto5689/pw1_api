@@ -1,4 +1,5 @@
-import { Router } from "express"
+import { Router, request } from "express"
+import multer from "multer"
 
 import { createSupplierController } from "../useCases/CreateSupplier"
 import { createProductController } from "../useCases/CreateProduct"
@@ -27,19 +28,22 @@ import { updateSupplyController } from "../useCases/UpdateSupply"
 
 import EnsureAuthenticate from "../middlewares/EnsureAuthenticate"
 import { authenticateUser } from "../useCases/Authenticate"
+import { saveImageController } from "../useCases/SaveProductImage"
 
 const router: Router = Router()
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 router.get("/", EnsureAuthenticate.handle, (request, response) => {
     return response.json({ message: "Hello, world!" })
 })
 
 router.post("/auth",  (req, res) => {authenticateUser.handle(req, res) })
-
 router.post("/supplier", (request, response) => createSupplierController.handle(request, response))
 router.post("/product", (request, response) => createProductController.handle(request, response))
 router.post("/person",(request, response) => createPersonController.handle(request, response))
 router.post("/supply", (request, response) => createSupplyController.handle(request, response))
+
 
 router.get("/supplier", (request, response) => findAllSuppliersController.handle(request, response)) 
 router.get("/person", (request, response) => findAllPersonController.handle(request, response))
@@ -60,5 +64,7 @@ router.put("/person/:id", (request, response) => updatePersonController.handle(r
 router.put("/product/:id", (request, response) => updateProductController.handle(request, response))
 router.put("/supplier/:id", (request, response) => updateSupplierController.handle(request, response))
 router.put("/supply/:id", (request, response) => updateSupplyController.handle(request, response))
+
+router.patch("/product/:id", upload.single('image'), (request, response) => saveImageController.handle(request, response))
 
 export default router

@@ -77,7 +77,7 @@ class Product extends Model {
     declare expiration_date: Date
 
     @Column({
-        type: DataType.BLOB("long"),
+        type: DataType.BLOB,
         allowNull: true
     })
     declare image: Blob

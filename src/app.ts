@@ -8,7 +8,7 @@ const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
 try {
     await sequelize.authenticate()
     await sequelize.sync()
-
+    
     app.listen(port, () => {
         console.table({
             status: "Working",
