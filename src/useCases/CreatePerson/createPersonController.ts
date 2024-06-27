@@ -15,6 +15,7 @@ export class CreatePersonController{
 
             const data:z.infer<typeof CreatePersonDTO> = request.body
 
+
             await this.createPersonUseCase.execute({
                 ...data
             })

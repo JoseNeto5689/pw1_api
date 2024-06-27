@@ -1,7 +1,7 @@
 export class Person {
     public readonly id!: string
     public name!: string
-    public address: string | undefined
+    public address: object | undefined
     public type!: string
     public password!: string
     public contact: string[] | undefined

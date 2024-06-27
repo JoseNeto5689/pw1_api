@@ -36,7 +36,7 @@ class Person extends Model {
         type: DataType.GEOGRAPHY,
         allowNull: true
     })
-    declare address: string
+    declare address: object
 
     @Column({
         type: DataType.STRING,

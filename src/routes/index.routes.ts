@@ -38,7 +38,7 @@ router.post("/auth",  (req, res) => {authenticateUser.handle(req, res) })
 
 router.post("/supplier", (request, response) => createSupplierController.handle(request, response))
 router.post("/product", (request, response) => createProductController.handle(request, response))
-router.post("/person", (request, response) => createPersonController.handle(request, response))
+router.post("/person",(request, response) => createPersonController.handle(request, response))
 router.post("/supply", (request, response) => createSupplyController.handle(request, response))
 
 router.get("/supplier", (request, response) => findAllSuppliersController.handle(request, response)) 
