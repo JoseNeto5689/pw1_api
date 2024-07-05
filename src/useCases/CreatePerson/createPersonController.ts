@@ -1,7 +1,8 @@
 import { Request, Response } from "express"
 import { CreatePersonUseCase } from "./createPersonUseCase"
 import { CreatePersonDTO } from "./createPersonDTO"
-import { ZodIssue, z} from "zod"
+import { z} from "zod"
+import { generateMessageArray } from "../../utils/zodError"
 
 export class CreatePersonController{
     
@@ -9,7 +10,7 @@ export class CreatePersonController{
         private createPersonUseCase: CreatePersonUseCase,
     ) {}
 
-    async handle (request: Request, reponse: Response) {
+    async handle (request: Request, response: Response) {
         try {
             CreatePersonDTO.parse(request.body)
 
@@ -20,10 +21,11 @@ export class CreatePersonController{
                 ...data
             })
 
-            return reponse.json("ok")
+            return response.json("ok")
         }
         catch (err:any) {
-            return reponse.status(400).json({error: err.issues.map((issue:ZodIssue) => issue.path[0] + ", " + issue.message)})
+            const message = generateMessageArray(err)
+            return response.status(400).json({errors: message})
         }
         
     }

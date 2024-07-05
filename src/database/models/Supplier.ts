@@ -33,7 +33,7 @@ class Supplier extends Model {
         type: DataType.GEOGRAPHY,
         allowNull: true
     })
-    declare geolocalization: string
+    declare geolocalization: object
 
     @Column({
         type: DataType.BLOB,

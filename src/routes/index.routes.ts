@@ -1,4 +1,4 @@
-import { Router, request } from "express"
+import { Router } from "express"
 import multer from "multer"
 
 import { createSupplierController } from "../useCases/CreateSupplier"
@@ -65,6 +65,6 @@ router.put("/product/:id", (request, response) => updateProductController.handle
 router.put("/supplier/:id", (request, response) => updateSupplierController.handle(request, response))
 router.put("/supply/:id", (request, response) => updateSupplyController.handle(request, response))
 
-router.patch("/product/:id", upload.single('image'), (request, response) => saveImageController.handle(request, response))
+router.patch("/product/:id", upload.single("image"), (request, response) => saveImageController.handle(request, response))
 
 export default router

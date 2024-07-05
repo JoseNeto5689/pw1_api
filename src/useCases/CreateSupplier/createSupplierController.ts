@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { CreateSupplierUseCase } from "./createSupplierUseCase"
 import { CreateSupplierDTO } from "./createSupplierDTO"
 import { z } from "zod"
+import { generateMessageArray } from "../../utils/zodError"
 
 export class CreateSupplierController {
     
@@ -9,7 +10,7 @@ export class CreateSupplierController {
         private createSupplierUseCase: CreateSupplierUseCase,
     ) {}
 
-    async handle (request: Request, reponse: Response) {
+    async handle (request: Request, response: Response) {
         try {
             CreateSupplierDTO.parse(request.body)
 
@@ -19,10 +20,11 @@ export class CreateSupplierController {
                 ...data
             })
 
-            return reponse.json("ok")
+            return response.json("ok")
         }
         catch(err:any){
-            return reponse.status(400).json({error: err.issues.map((issue:z.ZodIssue) => issue.path[0] + ", " + issue.message)})
+            const message = generateMessageArray(err)
+            return response.status(400).json({errors: message})
         }
     }
 }

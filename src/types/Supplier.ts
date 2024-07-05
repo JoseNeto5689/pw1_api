@@ -1,7 +1,7 @@
 export class Supplier {
     public readonly id!: string
     public name!: string
-    public geolocalization: string | undefined
+    public geolocalization: object | undefined
     public image: Blob | undefined
 
     constructor(props: Omit<Supplier, "id">, id?: string) {

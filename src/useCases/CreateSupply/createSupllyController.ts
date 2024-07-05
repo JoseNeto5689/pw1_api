@@ -2,13 +2,14 @@ import { Request, Response } from "express"
 import { CreateSupplyDTO } from "./createSupplyDTO"
 import { CreateSupplyUseCase } from "./createSupplyUseCase"
 import { z } from "zod"
+import { generateMessageArray } from "../../utils/zodError"
 
 export class CreateSupplyController {
     constructor(
         private createSupplyUseCase: CreateSupplyUseCase
     ) {}
     
-    async handle (request: Request, reponse: Response) {
+    async handle (request: Request, response: Response) {
         try {
             CreateSupplyDTO.parse(request.body)
 
@@ -16,10 +17,11 @@ export class CreateSupplyController {
             await this.createSupplyUseCase.execute({
                 ...data
             })
-            return reponse.json("ok")
+            return response.json("ok")
         }
         catch(err:any){
-            return reponse.status(400).json({error: err.issues.map((issue:z.ZodIssue) => issue.path[0] + ", " + issue.message)})
+            const message = generateMessageArray(err)
+            return response.status(400).json({errors: message})
         }
         
     }
