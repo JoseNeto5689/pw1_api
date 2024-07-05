@@ -1,13 +1,14 @@
+import { z } from "zod"
 import { ISupplyRepository } from "../../repositories/ISupplyRepository"
 import { Supply } from "../../types/Supply"
-import { IUpdateSupplyRequestDTO } from "./updateSupplyDTO"
+import { UpdateSupplyDTO } from "./updateSupplyDTO"
 
 export class UpdateSupplyUseCase {
     constructor(
         private supplyRepository: ISupplyRepository
     ) {}
 
-    async execute(data: IUpdateSupplyRequestDTO, id: string): Promise<void> {
+    async execute(data:z.infer<typeof UpdateSupplyDTO>, id: string): Promise<void> {
         const supply = await this.supplyRepository.findById(id) as Supply
         const newSupply: Supply = {
             id: id,

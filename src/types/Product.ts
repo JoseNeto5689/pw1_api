@@ -1,12 +1,12 @@
 export class Product {
-    public readonly barcode!: string //Observar depois tipo correto para código de barras
+    public readonly barcode!: string 
     public name!: string
     public description: string | undefined
     public price!: number
     public batch: string | undefined
-    public manufacturing_date: Date | undefined
-    public expiration_date: Date | undefined
-    public image: string | undefined //Observar depois tipo correto para imagem
+    public manufacturing_date: string | undefined
+    public expiration_date: string | undefined
+    public image: string | undefined 
     public ammount!: number
     public type!: string
     public supplier_id!: string

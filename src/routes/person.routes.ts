@@ -3,7 +3,7 @@ import { findAllPersonController } from "../useCases/FindAllPerson"
 import { findByIdPersonController } from "../useCases/FindByIdPerson"
 import { deletePersonController } from "../useCases/DeletePerson"
 import { updatePersonController } from "../useCases/UpdatePerson"
-import { Application, Request, Response } from "express-serve-static-core";
+import { Application } from "express-serve-static-core"
 
 const personRoutes = (app: Application) => {
     app.post("/person",(request, response) => createPersonController.handle(request, response))

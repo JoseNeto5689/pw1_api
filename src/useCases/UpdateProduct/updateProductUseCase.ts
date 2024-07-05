@@ -1,6 +1,7 @@
+import { z } from "zod"
 import { IProductRepository } from "../../repositories/IProductRepository" 
 import { Product } from "../../types/Product" 
-import { IUpdateProductRequestDTO } from "./updateProductDTO"
+import { UpdateProductDTO } from "./updateProductDTO"
 
 export class UpdateProductUseCase {
 
@@ -9,7 +10,7 @@ export class UpdateProductUseCase {
     ) {}
 
     
-    async execute(data: IUpdateProductRequestDTO, id: string) {
+    async execute(data:z.infer<typeof UpdateProductDTO>, id: string) {
         const product = await this.productRepository.findById(id) as Product
         const newProduct: Product = {
             barcode: product.barcode,

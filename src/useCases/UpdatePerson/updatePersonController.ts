@@ -1,6 +1,8 @@
 import { Request, Response } from "express"
 import { UpdatePersonUseCase } from "./updatePersonUseCase"
-import { IUpdatePersonRequestDTO } from "./updatePersonDTO"
+import { UpdatePersonDTO } from "./updatePersonDTO"
+import { z } from "zod"
+import { generateMessageArray } from "../../utils/zodError"
 
 export class CreatePersonController{
     
@@ -8,15 +10,23 @@ export class CreatePersonController{
         private updatePersonUseCase: UpdatePersonUseCase,
     ) {}
 
-    async handle (request: Request, reponse: Response) {
+    async handle (request: Request, response: Response) {
+        try {
+            UpdatePersonDTO.parse(request.body)
+            const data:z.infer<typeof UpdatePersonDTO> = request.body
 
-        const data:IUpdatePersonRequestDTO = request.body
-        const { id } = request.params
-        await this.updatePersonUseCase.execute({
-            ...data
-        }, id)
+            const { id } = request.params
+            await this.updatePersonUseCase.execute({
+                ...data
+            }, id)
 
-        return reponse.json("ok")
+            return response.json("ok")
+        }
+        catch (err:any) {
+            const message = generateMessageArray(err)
+            return response.status(400).json({errors: message}) 
+        }
+        
         
     }
 }

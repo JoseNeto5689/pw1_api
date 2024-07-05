@@ -1,7 +1,7 @@
-import { password } from "bun"
+import { z } from "zod"
 import { IPersonRepository } from "../../repositories/IPersonRepository"
 import { Person } from "../../types/Person"
-import { IUpdatePersonRequestDTO } from "./updatePersonDTO"
+import { UpdatePersonDTO } from "./updatePersonDTO"
 
 export class UpdatePersonUseCase {
 
@@ -9,7 +9,7 @@ export class UpdatePersonUseCase {
         private personRepository: IPersonRepository
     ) {}
 
-    async execute(data: IUpdatePersonRequestDTO, id: string) {
+    async execute(data: z.infer<typeof UpdatePersonDTO>, id: string) {
         const person = await this.personRepository.findById(id) as Person
         const newPerson: Person = {
             id: person.id,
