@@ -77,10 +77,10 @@ class Product extends Model {
     declare expiration_date: Date
 
     @Column({
-        type: DataType.BLOB,
+        type: DataType.TEXT,
         allowNull: true
     })
-    declare image: Blob
+    declare image: string
 
     @CreatedAt
     declare createdAt: Date

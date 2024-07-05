@@ -11,8 +11,8 @@ export class SaveImageController {
         try {
             //@ts-ignore
             const image = req.file?.buffer as Buffer
-            const blob = new Blob([image]) as Blob
-            await this.saveImageUseCase.execute(req.params.id, blob)
+            const treatedImage = image.toString('base64')
+            await this.saveImageUseCase.execute(req.params.id, treatedImage)
             res.json("ok")
         } catch (error) {
             console.log(error)

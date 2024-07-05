@@ -6,7 +6,7 @@ export class Product {
     public batch: string | undefined
     public manufacturing_date: Date | undefined
     public expiration_date: Date | undefined
-    public image: Blob | undefined //Observar depois tipo correto para imagem
+    public image: string | undefined //Observar depois tipo correto para imagem
     public ammount!: number
     public type!: string
     public supplier_id!: string

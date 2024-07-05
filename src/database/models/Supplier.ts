@@ -36,10 +36,10 @@ class Supplier extends Model {
     declare geolocalization: object
 
     @Column({
-        type: DataType.BLOB,
+        type: DataType.TEXT,
         allowNull: true
     })
-    declare image: Blob
+    declare image: string
 
     @CreatedAt
     declare createdAt: Date

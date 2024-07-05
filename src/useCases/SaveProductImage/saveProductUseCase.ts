@@ -8,13 +8,12 @@ export class SaveImageUseCase {
         private productRepository: IProductRepository
     ) {}
 
-    async execute(id: string, buffer: Blob) {
+    async execute(id: string, buffer: string) {
         const product = await this.productRepository.findById(id) as Product
         const newProduct = {
             ...product,
             image: buffer
         }
-        console.log(newProduct)
         await this.productRepository.update(newProduct, id)
         return
     }
