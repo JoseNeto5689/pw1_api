@@ -3,6 +3,7 @@ export class Supplier {
     public name!: string
     public geolocalization: object | undefined
     public image: string | undefined
+    public password!: string
 
     constructor(props: Omit<Supplier, "id">, id?: string) {
         Object.assign(this, props)

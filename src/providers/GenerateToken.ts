@@ -1,10 +1,10 @@
 import { sign } from "jsonwebtoken"
 
 class GenerateToken {
-    async execute(userId: string) {
+    async execute(userId: string, isAdmin: boolean = false) {
         const secret = String(process.env.SECRET)
 
-        const token = sign({}, secret, {
+        const token = sign({ isAdmin }, secret, {
             expiresIn: "5m",
             subject: userId
         })

@@ -7,11 +7,11 @@ import { Application } from "express"
 import EnsureAuthenticate from "../middlewares/EnsureAuthenticate"
 
 const supplyRoutes = (app: Application) => {
-    app.post("/supply", EnsureAuthenticate.handle, (request, response) => createSupplyController.handle(request, response))
-    app.get("/supply", EnsureAuthenticate.handle, (request, response) => findAllSuppliesController.handle(request, response))
-    app.get("/supply/:id", EnsureAuthenticate.handle, (request, response) => findByIdSupplyController.handle(request, response))
-    app.delete("/supply/:id", EnsureAuthenticate.handle, (request, response) => deleteSupplyController.handle(request, response))
-    app.put("/supply/:id", EnsureAuthenticate.handle, (request, response) => updateSupplyController.handle(request, response))
+    app.post("/supply", EnsureAuthenticate.handleSupplier, (request, response) => createSupplyController.handle(request, response))
+    app.get("/supply", EnsureAuthenticate.handleSupplier, (request, response) => findAllSuppliesController.handle(request, response))
+    app.get("/supply/:id", EnsureAuthenticate.handleSupplier, (request, response) => findByIdSupplyController.handle(request, response))
+    app.delete("/supply/:id", EnsureAuthenticate.handleSupplier, (request, response) => deleteSupplyController.handle(request, response))
+    app.put("/supply/:id", EnsureAuthenticate.handleSupplier, (request, response) => updateSupplyController.handle(request, response))
 }
 
 export default supplyRoutes

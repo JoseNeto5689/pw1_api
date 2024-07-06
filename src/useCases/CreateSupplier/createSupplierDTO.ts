@@ -8,4 +8,8 @@ export const CreateSupplierDTO = z.object({
     }),
     geolocalization: z.object({type: z.string(), coordinates: z.array(z.number()), crs: z.any().optional() }).optional(),
     image: z.string().optional(),
+    password: z.string({
+        required_error: "Password is required",
+        invalid_type_error: "Password must be a string",
+    })
 })
