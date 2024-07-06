@@ -1,4 +1,4 @@
-import { Application } from 'express';
+import { Application } from "express"
 import personRoutes from "./person.routes"
 import productRoutes from "./product.routes"
 import supplierRoutes from "./supplier.routes"
