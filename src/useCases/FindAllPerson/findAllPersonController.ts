@@ -9,6 +9,7 @@ export class FindAllPersonController{
     ) {}
 
     async handle (request: Request, reponse: Response) {
+        console.log(request.body.userId)
 
         const persons: Person[] = await this.findAllPersonUseCase.execute()
         return reponse.json(persons)

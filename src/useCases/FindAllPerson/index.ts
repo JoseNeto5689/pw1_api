@@ -1,6 +1,6 @@
-import { PersonRepository } from "../../repositories/implementations/PersonRepository";
-import { FindAllPersonController } from "./findAllPersonController";
-import { FindAllPersonsUseCase } from "./findAllPersonUseCase";
+import { PersonRepository } from "../../repositories/implementations/PersonRepository"
+import { FindAllPersonController } from "./findAllPersonController"
+import { FindAllPersonsUseCase } from "./findAllPersonUseCase"
 
 
 const personRepository = new PersonRepository()

@@ -8,7 +8,7 @@ export class DeletePersonController{
     ) {}
 
     async handle (request: Request, reponse: Response) {
-        const { id } = request.params
+        const id = request.body.userId
         await this.deletePersonUseCase.execute(id)
         return reponse.json("ok")
         
