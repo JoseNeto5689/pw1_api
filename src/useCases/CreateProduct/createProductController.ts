@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { CreateProductUseCase } from "./createProductUseCase"
 import { CreateProductDTO } from "./createProductDTO"
 import { z } from "zod"
+import { generateMessageArray } from "../../utils/zodError"
 
 export class CreateProductController{
     
@@ -9,7 +10,7 @@ export class CreateProductController{
         private createProductUseCase: CreateProductUseCase,
     ) {}
 
-    async handle (request: Request, reponse: Response) {
+    async handle (request: Request, response: Response) {
         try {
             CreateProductDTO.parse(request.body)
 
@@ -19,10 +20,14 @@ export class CreateProductController{
                 ...data
             })
 
-            return reponse.json("ok")
+            return response.json("ok")
         }
         catch(err:any){
-            return reponse.status(400).json({error: err.issues.map((issue:z.ZodIssue) => issue.path[0] + ", " + issue.message)})
+            if(err.issues) {
+                const message = generateMessageArray(err)
+                return response.status(400).json({errors: message}) 
+            }
+            return response.status(400).json({error: err.message})
         }
     }
 }

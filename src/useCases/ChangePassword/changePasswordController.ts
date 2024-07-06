@@ -1,7 +1,8 @@
 import { Request, Response } from "express"
-import { ZodError, z } from "zod"
+import { z } from "zod"
 import { ChangePasswordUseCase } from "./changePasswordUseCase"
 import { ChangePasswordDTO } from "./changePasswordDTO"
+import { generateMessageArray } from "../../utils/zodError"
 
 export class ChangePasswordController{
     
@@ -22,7 +23,10 @@ export class ChangePasswordController{
             return response.json("ok")
         }
         catch(err:any){
-            if(err instanceof ZodError) return response.status(400).json({error: err.issues.map((issue:z.ZodIssue) => issue.path[0] + ", " + issue.message)})
+            if(err.issues) {
+                const message = generateMessageArray(err)
+                return response.status(400).json({errors: message}) 
+            }
             return response.status(400).json({error: err.message})
         }
     }

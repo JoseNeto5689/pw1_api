@@ -11,7 +11,7 @@ export class SaveImageController {
         try {
             //@ts-ignore
             const image = req.file?.buffer as Buffer
-            const treatedImage = image.toString('base64')
+            const treatedImage = image.toString("base64")
             await this.saveImageUseCase.execute(req.params.id, treatedImage)
             res.json("ok")
         } catch (error) {

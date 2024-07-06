@@ -18,9 +18,12 @@ export class UpdateSupplyController {
             await this.updateSupplyUseCase.execute(data, id)
             return response.json("ok")
         }
-        catch (err:any) {
-            const message = generateMessageArray(err)
-            return response.status(400).json({errors: message}) 
+        catch(err:any){
+            if(err.issues) {
+                const message = generateMessageArray(err)
+                return response.status(400).json({errors: message}) 
+            }
+            return response.status(400).json({error: err.message})
         }
     }
 }
