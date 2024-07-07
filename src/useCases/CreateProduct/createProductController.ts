@@ -12,12 +12,15 @@ export class CreateProductController{
 
     async handle (request: Request, response: Response) {
         try {
+            const id = request.body.userId
+
             CreateProductDTO.parse(request.body)
 
             const data:z.infer<typeof CreateProductDTO> = request.body
 
             await this.createProductUseCase.execute({
-                ...data
+                ...data,
+                supplier_id: id
             })
 
             return response.json("ok")

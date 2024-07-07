@@ -7,7 +7,7 @@ export class DeleteSupplierController {
     ) {}
     
     async handle(request: Request, response: Response): Promise<Response> {
-        const { id } = request.params
+        const id = request.body.userId
         await this.deleteSupplierUseCase.execute(id)
         return response.json("ok")
     }

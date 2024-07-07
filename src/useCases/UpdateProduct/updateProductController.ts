@@ -14,11 +14,11 @@ export class CreateProductController{
         try {
             UpdateProductDTO.parse(request.body)
             const data:z.infer<typeof UpdateProductDTO> = request.body
-
+            const supplier_id = request.body.userId
             const { id } = request.params
             await this.updateProductUseCase.execute({
                 ...data
-            }, id)
+            }, id, supplier_id)
 
             return response.json("ok")
         }

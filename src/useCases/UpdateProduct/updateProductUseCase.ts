@@ -10,8 +10,9 @@ export class UpdateProductUseCase {
     ) {}
 
     
-    async execute(data:z.infer<typeof UpdateProductDTO>, id: string) {
+    async execute(data:z.infer<typeof UpdateProductDTO>, id: string, supplier_id: string) {
         const product = await this.productRepository.findById(id) as Product
+        if (product.supplier_id !== supplier_id) throw new Error("You can't update a product that is not yours")
         const newProduct: Product = {
             barcode: product.barcode,
             name: data.name || product.name,
@@ -23,7 +24,7 @@ export class UpdateProductUseCase {
             image: data.image || product.image,
             ammount: data.ammount || product.ammount,
             type: data.type || product.type,
-            supplier_id: data.supplier_id || product.supplier_id
+            supplier_id: product.supplier_id
         }
 
         await this.productRepository.update(newProduct, id)

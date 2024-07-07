@@ -21,9 +21,5 @@ export const CreateProductDTO = z.object({
     type: z.string({
         required_error: "Type is required",
         invalid_type_error: "Type must be a string",
-    }),
-    supplier_id: z.string({
-        required_error: "Supplier is required",
-        invalid_type_error: "Supplier must be a string",
-    }),
+    })
 })

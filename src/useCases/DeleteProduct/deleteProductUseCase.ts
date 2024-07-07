@@ -6,7 +6,9 @@ export class DeleteProductUseCase {
         private productRepository: IProductRepository
     ) {}
 
-    async execute(barcode: string) {
+    async execute(barcode: string, supplier_id: string) {
+        const product = await this.productRepository.findById(barcode)
+        if (product?.supplier_id !== supplier_id) throw new Error("You can't delete a product that is not yours")
         await this.productRepository.remove(barcode)
     }
 }

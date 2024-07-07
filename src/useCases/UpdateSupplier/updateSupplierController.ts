@@ -15,7 +15,7 @@ export class UpdateSupplierController{
             UpdateSupplierDTO.parse(request.body)
             const data:z.infer<typeof UpdateSupplierDTO> = request.body
 
-            const { id } = request.params
+            const id = request.body.userId
             await this.updateSupplierUseCase.execute({
                 ...data
             }, id)

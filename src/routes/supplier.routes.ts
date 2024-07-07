@@ -13,11 +13,11 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 */
 const supplierRoutes = (app: Application) => {
-    app.post("/supplier", EnsureAuthenticate.handleSupplier, (request, response) => createSupplierController.handle(request, response))
-    app.get("/supplier", EnsureAuthenticate.handleSupplier, (request, response) => findAllSuppliersController.handle(request, response)) 
-    app.get("/supplier/:id", EnsureAuthenticate.handleSupplier, (request, response) => findByIdSupplierController.handle(request, response))
-    app.delete("/supplier/:id", EnsureAuthenticate.handleSupplier, (request, response) => deleteSupplierController.handle(request, response))
-    app.put("/supplier/:id", EnsureAuthenticate.handleSupplier, (request, response) => updateSupplierController.handle(request, response))
+    app.post("/supplier", (request, response) => createSupplierController.handle(request, response))
+    app.get("/supplier", (request, response) => findAllSuppliersController.handle(request, response)) 
+    app.get("/supplier/:id", (request, response) => findByIdSupplierController.handle(request, response))
+    app.delete("/supplier", EnsureAuthenticate.handleSupplier, (request, response) => deleteSupplierController.handle(request, response))
+    app.put("/supplier", EnsureAuthenticate.handleSupplier, (request, response) => updateSupplierController.handle(request, response))
 }
 
 export default supplierRoutes

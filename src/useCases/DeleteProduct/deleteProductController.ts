@@ -9,7 +9,8 @@ export class DeleteProductController{
 
     async handle (request: Request, reponse: Response) {
         const { id } = request.params
-        await this.deleteProductUseCase.execute(id)
+        const supplier_id = request.body.userId
+        await this.deleteProductUseCase.execute(id, supplier_id)
         return reponse.json("ok")
         
     }
