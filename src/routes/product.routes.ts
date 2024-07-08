@@ -7,10 +7,8 @@ import { saveImageController } from "../useCases/SaveProductImage"
 import { Application } from "express"
 import EnsureAuthenticate from "../middlewares/EnsureAuthenticate"
 import { findSupplierProductsController } from "../useCases/FindSupplierProduct"
-import multer from "multer"
+import { upload } from "."
 
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
 
 const productRoutes = (app: Application) => {
     app.post("/product", EnsureAuthenticate.handleSupplier, (request, response) => createProductController.handle(request, response))
