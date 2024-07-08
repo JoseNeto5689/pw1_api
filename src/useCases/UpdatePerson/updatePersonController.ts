@@ -16,11 +16,18 @@ export class CreatePersonController{
             const data:z.infer<typeof UpdatePersonDTO> = request.body
 
             const id = request.body.userId
-            await this.updatePersonUseCase.execute({
+            const personCreated: any = await this.updatePersonUseCase.execute({
                 ...data
             }, id)
 
-            return response.json("ok")
+            return response.json({
+                id: personCreated.id,
+                name: personCreated.name,
+                email: personCreated.email,
+                address: personCreated.address,
+                type: personCreated.type,
+                contact: personCreated.contact
+            })
         }
         catch(err:any){
             if(err.issues) {

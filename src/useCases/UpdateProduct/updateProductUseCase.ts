@@ -28,5 +28,7 @@ export class UpdateProductUseCase {
         }
 
         await this.productRepository.update(newProduct, id)
+
+        return newProduct
     }
 }

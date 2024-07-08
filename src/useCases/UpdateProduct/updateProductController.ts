@@ -16,11 +16,22 @@ export class CreateProductController{
             const data:z.infer<typeof UpdateProductDTO> = request.body
             const supplier_id = request.body.userId
             const { id } = request.params
-            await this.updateProductUseCase.execute({
+            const result = await this.updateProductUseCase.execute({
                 ...data
             }, id, supplier_id)
 
-            return response.json("ok")
+
+            return response.json({
+                barcode: result.barcode,
+                name: result.name,
+                description: result.description,
+                price: result.price,
+                batch: result.batch,
+                manufacturing_date: result.manufacturing_date,
+                expiration_date: result.expiration_date,
+                ammount: result.ammount,
+                type: result.type
+            })
         }
         catch(err:any){
             if(err.issues) {

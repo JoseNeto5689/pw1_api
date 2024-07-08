@@ -20,5 +20,7 @@ export class UpdateSupplierUseCase {
         }
 
         await this.supplierRepository.update(newSupplier, id)
+
+        return newSupplier
     }
 }

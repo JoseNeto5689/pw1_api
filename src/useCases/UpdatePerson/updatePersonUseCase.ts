@@ -21,5 +21,7 @@ export class UpdatePersonUseCase {
         }
 
         await this.personRepository.update(newPerson, id)
+
+        return newPerson
     }
 }

@@ -16,11 +16,16 @@ export class UpdateSupplierController{
             const data:z.infer<typeof UpdateSupplierDTO> = request.body
 
             const id = request.body.userId
-            await this.updateSupplierUseCase.execute({
+            const result = await this.updateSupplierUseCase.execute({
                 ...data
             }, id)
 
-            return response.json("ok")
+            return response.json({
+                id: result.id,
+                name: result.name,
+                geolocalization: result.geolocalization,
+                image: result.image,
+            })
         }
         catch(err:any){
             if(err.issues) {

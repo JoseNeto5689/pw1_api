@@ -8,7 +8,7 @@ export class UpdateSupplyUseCase {
         private supplyRepository: ISupplyRepository
     ) {}
 
-    async execute(data:z.infer<typeof UpdateSupplyDTO>, id: string): Promise<void> {
+    async execute(data:z.infer<typeof UpdateSupplyDTO>, id: string) {
         const supply = await this.supplyRepository.findById(id) as Supply
         const newSupply: Supply = {
             id: id,
@@ -18,5 +18,7 @@ export class UpdateSupplyUseCase {
         }
 
         await this.supplyRepository.update(newSupply, id)
+
+        return newSupply
     }
 }
