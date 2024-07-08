@@ -17,10 +17,12 @@ export class SupplyRepository implements ISupplyRepository {
         return supplies
     }
     
-    async save(supply: Supply): Promise<void> {
-        await sequelize.models.Supply.create({
+    async save(supply: Supply): Promise<unknown> {
+        const supplyCreated = await sequelize.models.Supply.create({
             ...supply
         })
+
+        return supplyCreated
     }
 
     async remove(id: string): Promise<void> {
@@ -31,14 +33,16 @@ export class SupplyRepository implements ISupplyRepository {
         })
     }
 
-    async update(supply: Supply, id: string): Promise<void> {
-        await sequelize.models.Supply.update({
+    async update(supply: Supply, id: string): Promise<unknown> {
+        const supplyUpdated = await sequelize.models.Supply.update({
             ...supply
         }, {
             where: {
                 id
             }
         })
+
+        return supplyUpdated
     }
 
 }

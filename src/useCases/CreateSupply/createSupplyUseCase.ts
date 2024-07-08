@@ -10,6 +10,6 @@ export class CreateSupplyUseCase {
 
     async execute(data: any) {
         const supply = new Supply(data)
-        await this.supplyRepository.save(supply)
+        return await this.supplyRepository.save(supply)
     }
 }

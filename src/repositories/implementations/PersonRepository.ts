@@ -14,14 +14,15 @@ export class PersonRepository implements IPersonRepository {
         return person as Person | null
     }
 
-    async update(person: Person, id: string): Promise<void> {
-        await sequelize.models.Person.update({
+    async update(person: Person, id: string): Promise<unknown> {
+        const personUpdated = await sequelize.models.Person.update({
             ...person
         }, {
             where: {
                 id: id
             }
         })
+        return personUpdated
     }
 
 
@@ -38,10 +39,11 @@ export class PersonRepository implements IPersonRepository {
         return result
     }
     
-    async save(person: Person): Promise<void> {
-        await sequelize.models.Person.create({
+    async save(person: Person): Promise<unknown> {
+        const personCreated = await sequelize.models.Person.create({
             ...person
         })
+        return personCreated
     }
 
     async findAll(): Promise<Person[]> {

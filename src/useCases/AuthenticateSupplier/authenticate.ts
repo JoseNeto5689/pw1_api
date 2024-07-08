@@ -18,6 +18,8 @@ class AuthenticateSupplier {
             const { id, password } = <IRequest>req.body
             const user = await this.supplierRepository.findById(id)
 
+            console.log(user)
+
             if (!user) {
                 return res.status(401).json({ status: "This id is not registered" })
             }

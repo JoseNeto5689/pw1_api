@@ -17,11 +17,19 @@ export class CreatePersonController{
             const data:z.infer<typeof CreatePersonDTO> = request.body
 
 
-            await this.createPersonUseCase.execute({
+            const personCreated: any = await this.createPersonUseCase.execute({
                 ...data
             })
 
-            return response.json("ok")
+
+            return response.json({
+                id: personCreated.id,
+                name: personCreated.name,
+                email: personCreated.email,
+                address: personCreated.address,
+                type: personCreated.type,
+                contact: personCreated.contact
+            })
         }
         catch (err:any) {
             const message = generateMessageArray(err)

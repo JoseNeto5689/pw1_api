@@ -16,6 +16,8 @@ export class CreatePersonUseCase {
             ...data,
             password
         })
-        await this.personRepository.save(person)
+        const result = await this.personRepository.save(person)
+
+        return result
     }
 }

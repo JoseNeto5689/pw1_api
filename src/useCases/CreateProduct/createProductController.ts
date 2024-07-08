@@ -18,12 +18,23 @@ export class CreateProductController{
 
             const data:z.infer<typeof CreateProductDTO> = request.body
 
-            await this.createProductUseCase.execute({
+            const result:any = await this.createProductUseCase.execute({
                 ...data,
                 supplier_id: id
             })
 
-            return response.json("ok")
+            return response.json({
+                barcode: result.barcode,
+                name: result.name,
+                description: result.description,
+                price: result.price,
+                quantity: result.quantity,
+                batch: result.bacth,
+                manufacturing_date: result.manufacturing_date,
+                expiration_date: result.expiration_date,
+                ammount: result.ammount,
+                type: result.type
+            })
         }
         catch(err:any){
             if(err.issues) {

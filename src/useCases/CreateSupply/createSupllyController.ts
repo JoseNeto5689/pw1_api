@@ -14,10 +14,10 @@ export class CreateSupplyController {
             CreateSupplyDTO.parse(request.body)
 
             const data:z.infer<typeof CreateSupplyDTO> = request.body
-            await this.createSupplyUseCase.execute({
+            const result = await this.createSupplyUseCase.execute({
                 ...data
             })
-            return response.json("ok")
+            return response.json(result)
         }
         catch(err:any){
             if(err.issues) {

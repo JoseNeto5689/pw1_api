@@ -7,7 +7,7 @@ import { saveImageController } from "../useCases/SaveProductImage"
 import { Application } from "express"
 import EnsureAuthenticate from "../middlewares/EnsureAuthenticate"
 import { findSupplierProductsController } from "../useCases/FindSupplierProduct"
-import { upload } from "."
+import { upload } from "../utils/multer"
 
 
 const productRoutes = (app: Application) => {

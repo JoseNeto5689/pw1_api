@@ -7,7 +7,7 @@ import { deleteSupplierController } from "../useCases/DeleteSupplier"
 import { updateSupplierController } from "../useCases/UpdateSupplier"
 import EnsureAuthenticate from "../middlewares/EnsureAuthenticate"
 import { saveImageController } from "../useCases/saveSupplierImage"
-import { upload } from "."
+import { upload } from "../utils/multer"
 
 const supplierRoutes = (app: Application) => {
     app.post("/supplier", (request, response) => createSupplierController.handle(request, response))

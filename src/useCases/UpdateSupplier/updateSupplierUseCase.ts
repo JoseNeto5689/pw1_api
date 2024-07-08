@@ -15,7 +15,8 @@ export class UpdateSupplierUseCase {
             id: supplier.id,
             name: data.name || supplier.name,
             geolocalization: data.geolocalization || supplier.geolocalization,
-            image: data.image || supplier.image
+            image: data.image || supplier.image,
+            password: supplier.password
         }
 
         await this.supplierRepository.update(newSupplier, id)

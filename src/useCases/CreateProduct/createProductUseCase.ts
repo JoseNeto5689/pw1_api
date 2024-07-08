@@ -10,6 +10,6 @@ export class CreateProductUseCase {
 
     async execute(data: any) {
         const product = new Product(data)
-        await this.productRepository.save(product)
+        return await this.productRepository.save(product)
     }
 }

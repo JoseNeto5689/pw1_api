@@ -18,6 +18,6 @@ export class CreateSupplierUseCase {
             password
         })
 
-        await this.supplierRepository.save(supplier)
+        return await this.supplierRepository.save(supplier)
     }
 }

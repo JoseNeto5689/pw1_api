@@ -16,11 +16,16 @@ export class CreateSupplierController {
 
             const data:z.infer<typeof CreateSupplierDTO> = request.body
             
-            await this.createSupplierUseCase.execute({
+            const result:any = await this.createSupplierUseCase.execute({
                 ...data
             })
 
-            return response.json("ok")
+            return response.json({
+                id: result.id,
+                name: result.name,
+                geolocalization: result.geolocalization,
+                image: result.image,
+            })
         }
         catch(err:any){
             if(err.issues) {

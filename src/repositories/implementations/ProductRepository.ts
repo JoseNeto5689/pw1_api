@@ -31,10 +31,13 @@ export class ProductRepository implements IProductRepository {
         return products
     }
     
-    async save(product: Product): Promise<void> {
-        await sequelize.models.Product.create({
+    async save(product: Product): Promise<unknown> {
+        
+        const productCreated = await sequelize.models.Product.create({
             ...product
         })
+
+        return productCreated
     }
 
     async remove(barcode: string): Promise<void> {
@@ -45,13 +48,15 @@ export class ProductRepository implements IProductRepository {
         })
     }
 
-    async update(product: Product, barcode: string): Promise<void> {
-        await sequelize.models.Product.update({
+    async update(product: Product, barcode: string): Promise<unknown> {
+        const productUpdated = await sequelize.models.Product.update({
             ...product
         }, {
             where: {
                 barcode
             }
         })
+
+        return productUpdated
     }
 }
