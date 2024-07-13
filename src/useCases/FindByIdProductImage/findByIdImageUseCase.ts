@@ -11,7 +11,7 @@ export class FindByIdProductUseCase {
     async execute(id: string) {
         const product = await this.productRepository.findById(id)
         if(product?.image){
-            fs.writeFileSync("./files/" +  id + ".png", product.image, {encoding: "base64"})
+            fs.writeFileSync(__dirname + "/files/" +  id + ".png", product.image, {encoding: "base64"})
             return true
         }
         return false

@@ -9,9 +9,9 @@ export class FindByIdSupplierUseCase {
     ) {}
 
     async execute(id: string) {
-        const person = await this.supplierRepository.findById(id)
-        if(person?.image){
-            fs.writeFileSync("./files/" +  id + ".png", person.image, {encoding: "base64"})
+        const supplier = await this.supplierRepository.findById(id)
+        if(supplier?.image){
+            fs.writeFileSync(__dirname + "/files/" +  id + ".png", supplier.image, {encoding: "base64"})
             return true
         }
         return false
