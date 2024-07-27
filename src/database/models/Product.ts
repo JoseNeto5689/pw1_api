@@ -48,11 +48,6 @@ class Product extends Model {
     declare type: false
 
     @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
-
-    @Column({
         type: DataType.FLOAT,
         allowNull: false
     })
