@@ -1,4 +1,4 @@
-import sequelize  from "./database/connection"
+import sequelize from "./database"
 import app from "./config"
 import dotenv from "dotenv"
 

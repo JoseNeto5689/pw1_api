@@ -1,12 +1,14 @@
 import { Sequelize } from "sequelize-typescript"
 
-const sequelize = new Sequelize({
-    database: process.env.DB || "",
-    password: process.env.DB_PASSWORD || "",
-    username: process.env.DB_USER || "",
-    host: process.env.DB_HOST || "",
-    dialect: "postgres",
-    models: [__dirname + "/models"]
-})
+function sequelizeInit(database: string, password: string, username: string, host: string) {
+    return new Sequelize({
+        database,
+        password,
+        username,
+        host,
+        dialect: "postgres",
+        models: [__dirname + "/models"] 
+    })
+}
 
-export default sequelize
+export default sequelizeInit

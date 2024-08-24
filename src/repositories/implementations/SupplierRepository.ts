@@ -1,16 +1,16 @@
-import sequelize from "../../database/connection"
 import { Supplier } from "../../types/Supplier"
 import { ISupplierRepository } from "../ISupplierRepository"
 
 export class SupplierRepository implements ISupplierRepository {
+    constructor(private sequelize: any) {}
 
     async findById(id: string): Promise<Supplier | null> {
-        const result: Supplier | null = await sequelize.models.Supplier.findByPk(id) as Supplier | null
+        const result: Supplier | null = await this.sequelize.models.Supplier.findByPk(id) as Supplier | null
         return result
     }
     
     async findAll(): Promise<Supplier[]> {
-        const result = await sequelize.models.Supplier.findAll()
+        const result = await this.sequelize.models.Supplier.findAll()
         const suppliers: Supplier[] = []
         result.forEach((supplier: any) => {
             suppliers.push(supplier)
@@ -19,7 +19,7 @@ export class SupplierRepository implements ISupplierRepository {
     }
 
     async save(supplier: Supplier): Promise<unknown> {
-        const supplierCreated = await sequelize.models.Supplier.create({
+        const supplierCreated = await this.sequelize.models.Supplier.create({
             ...supplier
         })
 
@@ -27,7 +27,7 @@ export class SupplierRepository implements ISupplierRepository {
     }
 
     async remove(id: string): Promise<void> {
-        await sequelize.models.Supplier.destroy({
+        await this.sequelize.models.Supplier.destroy({
             where: {
                 id
             }
@@ -36,7 +36,7 @@ export class SupplierRepository implements ISupplierRepository {
 
     async update(supplier: Supplier, id: string): Promise<unknown> {
         
-        const supplierUpdated = await sequelize.models.Supplier.update({
+        const supplierUpdated = await this.sequelize.models.Supplier.update({
             ...supplier
         }, {
             where: {

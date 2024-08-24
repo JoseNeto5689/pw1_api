@@ -1,21 +1,21 @@
-import sequelize from "../../database/connection"
 import { Person } from "../../types/Person"
 import { IPersonRepository } from "../IPersonRepository"
 
 export class PersonRepository implements IPersonRepository {
+    constructor(private sequelize: any) {}
+
     async findByName(name: string): Promise<Person | null> {
-        const person = await sequelize.models.Person.findOne({
+        const person = await this.sequelize.models.Person.findOne({
             where: {
                 name: name
             }
         })
 
-
         return person as Person | null
     }
 
     async update(person: Person, id: string): Promise<unknown> {
-        const personUpdated = await sequelize.models.Person.update({
+        const personUpdated = await this.sequelize.models.Person.update({
             ...person
         }, {
             where: {
@@ -27,7 +27,7 @@ export class PersonRepository implements IPersonRepository {
 
 
     async remove(id: string): Promise<void> {
-        await sequelize.models.Person.destroy({
+        await this.sequelize.models.Person.destroy({
             where: {
                 id: id
             }
@@ -35,19 +35,19 @@ export class PersonRepository implements IPersonRepository {
     }
 
     async findById(id: string): Promise<Person | null> {
-        const result: Person | null = await sequelize.models.Person.findByPk(id) as Person | null
+        const result: Person | null = await this.sequelize.models.Person.findByPk(id) as Person | null
         return result
     }
     
     async save(person: Person): Promise<unknown> {
-        const personCreated = await sequelize.models.Person.create({
+        const personCreated = await this.sequelize.models.Person.create({
             ...person
         })
         return personCreated
     }
 
     async findAll(): Promise<Person[]> {
-        const result =  await sequelize.models.Person.findAll()
+        const result =  await this.sequelize.models.Person.findAll()
         const persons: Person[] = []
         result.forEach((person: any) => {
             persons.push(person)
