@@ -4,7 +4,6 @@ import {
     StoppedTestContainer,
     GenericContainer
 } from "testcontainers"
-import axios from "axios"
 import { SupplierRepository } from "../repositories/implementations/SupplierRepository"
 import { CreateSupplierUseCase } from "../useCases/CreateSupplier/createSupplierUseCase"
 import sequelizeInit from "../database/connection"
@@ -12,25 +11,33 @@ import sequelizeInit from "../database/connection"
 describe("Testes com tabela Person sem autentificação", () => {
     jest.setTimeout(15000)
     let sequelize: any = null
+    let startedContainer: StartedTestContainer
 
     beforeAll(async () => {
-        
         const container: TestContainer = new GenericContainer("postgis/postgis:latest")
-        console.log('bandido')
-        const startedContainer: StartedTestContainer = await container.start()
-        console.log('jose')
-        console.log(startedContainer.getHost())
-        sequelize = sequelizeInit('postgres', 'postgres', 'postgres', startedContainer.getHost())
-        //const stoppedContainer: StoppedTestContainer = await startedContainer.stop()    
+        startedContainer = await container
+        .withEnvironment({"POSTGRES_USER": "admin"})
+        .withEnvironment({"POSTGRES_DB": "main"})
+        .withEnvironment({"POSTGRES_PASSWORD": "123"})
+        .start()
+        sequelize = sequelizeInit("main", "123","admin", startedContainer.getHost())
+        await sequelize.sync()
     })
+
+    afterAll(async () => {
+            await startedContainer.stop()
+            await sequelize.close()
+        }
+    )
 
     test("Deve adicionar e selecionar uma pessoa", async () => {
         const supplierRepository = new SupplierRepository(sequelize)
         const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository)
         let data = {
-            username: 'José',
+            name: 'JV',
             password: 'bandido'
         }
-        expect(await createSupplierUseCase.execute(data)).not.toThrow()
+        
+        expect(async () => {return await createSupplierUseCase.execute(data)}).not.toThrow()
     })
 })

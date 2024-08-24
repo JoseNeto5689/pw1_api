@@ -1,6 +1,6 @@
 import { ISupplierRepository } from "../../repositories/ISupplierRepository"
 import { Supplier } from "../../types/Supplier"
-import bcrypt from "bcryptjs"
+import {hash} from "bcryptjs"
 //import { ISupplierRequestDTO } from "./createSupplierDTO"
 
 export class CreateSupplierUseCase {
@@ -11,7 +11,7 @@ export class CreateSupplierUseCase {
 
     async execute(data: any) {
 
-        const password = await bcrypt.hash(data.password, 8)
+        const password = await hash(data.password, 8)
 
         const supplier = new Supplier({
             ...data,
