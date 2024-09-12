@@ -11,14 +11,11 @@ describe("Testes com tabela Person sem autentificação", () => {
     beforeEach(async () => {
         container = await new PostgreSqlContainer("postgis/postgis:latest").start()
         sequelize = sequelizeInitURI(container.getConnectionUri())
-        await sequelize.sync()
-    })
-
-    afterEach(async () => {
-        await container.stop()
+        await sequelize.sync({force: true})
     })
 
     test("Deve adicionar e selecionar uma pessoa", async () => {
+
         const supplierRepository = await new SupplierRepository(sequelize)
         const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
         const data:any = {
@@ -28,4 +25,12 @@ describe("Testes com tabela Person sem autentificação", () => {
         
         expect(async () => {return await createSupplierUseCase.execute(data)}).not.toThrow()
     })
+
+    afterEach(async () => {
+        await container.stop()
+        await sequelize.close()
+        sequelize = null
+        container = null
+    })
+
 })
