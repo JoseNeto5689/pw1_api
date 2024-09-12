@@ -9,7 +9,14 @@ function sequelizeInit(database: string, password: string, username: string, hos
         dialect: "postgres",
         models: [__dirname + "/models"] 
     })
-    
+}
+
+function sequelizeInitURI(uri: string) {
+    return new Sequelize(uri, {
+        dialect: "postgres",
+        models: [__dirname + "/models"]
+    })
 }
 
 export default sequelizeInit
+export {sequelizeInitURI}
