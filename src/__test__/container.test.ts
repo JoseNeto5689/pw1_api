@@ -8,17 +8,21 @@ import { CreatePersonUseCase } from "../useCases/CreatePerson/createPersonUseCas
 
 import { DeleteProductUseCase } from "../useCases/DeleteProduct/deleteProductUseCase"
 import { DeleteSupplierUseCase } from "../useCases/DeleteSupplier/deleteSupplierUseCase"
+import { DeletePersonUseCase } from "../useCases/DeletePerson/deletePersonUseCase"
 
 
 import { UpdateProductUseCase } from "../useCases/UpdateProduct/updateProductUseCase"
 import { UpdateSupplierUseCase } from "../useCases/UpdateSupplier/updateSupplierUseCase"
+import { UpdatePersonUseCase } from "../useCases/UpdatePerson/updatePersonUseCase"
 
 
 import { FindByIdProductUseCase } from "../useCases/FindByIdProduct/findByIdProductUseCase"
 import { FindByIdSupplierUseCase } from "../useCases/FindByIdSupplier/findByIdSupplierUseCase"
+import { FindByIdPersonUseCase } from "../useCases/FindByIdPerson/findByIdPersonUseCase"
 
 import { FindAllProductsUseCase } from "../useCases/FindAllProduct/findAllProductsUsecase"
 import { FindAllSuppliersUseCase } from "../useCases/FindAllSupplier/findAllSupplierUseCase"
+import { FindAllPersonsUseCase } from "../useCases/FindAllPerson/findAllPersonUseCase"
 
 
 import {PostgreSqlContainer} from "@testcontainers/postgresql"
@@ -50,7 +54,7 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
 
-    // Supplier UseCases
+    /// Supplier UseCases
 
     test("Deve criar um supplier", async () => {
         const supplierRepository = await new SupplierRepository(sequelize)
@@ -125,11 +129,90 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
         }
 
         let response: any = await createSupplierUseCase.execute(supplier)
-        console.log(await deleteSupplierUseCase.execute(response.dataValues.id));
+        expect(async () => {return await deleteSupplierUseCase.execute(response.dataValues.id)}).not.toThrow()
+    })
         
+    /// Person UsesCases
 
+    test("Deve criar um person", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+
+        expect(async () => {return await createPersonUseCase.execute(person)}).not.toThrow()
     })
 
+    test("Deve retornar todos os person cadastrado", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const findAllPersonUseCase = await new FindAllPersonsUseCase(personRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+
+        await createPersonUseCase.execute(person)
+        expect(async () => {return await findAllPersonUseCase.execute()}).not.toThrow()
+    })
+
+    test("Deve retornar um person cadastrado pelo id", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const findByIdPersonUseCase = await new FindByIdPersonUseCase(personRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+
+        let response: any = await createPersonUseCase.execute(person)
+        expect(async () => {return await findByIdPersonUseCase.execute(response.dataValues.id)}).not.toThrow()
+    })
+
+    test("Deve atualizar um person cadastrado pelo id", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const updatePersonUseCase = await new UpdatePersonUseCase(personRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+
+        const updatePerson: any = {
+            name: "Gabriel Marcos",
+            password: "654123",
+            type: "CLT"
+        }
+
+        let response: any = await createPersonUseCase.execute(person)
+        expect(async () => {return await updatePersonUseCase.execute(updatePerson, response.dataValues.id)}).not.toThrow()
+    })
+
+    test("Deve deletar um person cadastrado pelo id", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const deletePersonUseCase = await new DeletePersonUseCase(personRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+
+        let response: any = await createPersonUseCase.execute(person)
+        expect(async () => {return await deletePersonUseCase.execute(response.dataValues.id)}).not.toThrow()
+    })
+    
     /// Product UsesCases 
 
     test("Deve criar um produto", async () => {
