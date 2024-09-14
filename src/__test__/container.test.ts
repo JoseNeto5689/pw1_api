@@ -1,34 +1,37 @@
 import { SupplierRepository } from "../repositories/implementations/SupplierRepository"
 import { ProductRepository } from "../repositories/implementations/ProductRepository"
 import { PersonRepository } from "../repositories/implementations/PersonRepository"
+import { SupplyRepository } from "../repositories/implementations/SupplyRepository"
 
 import { CreateSupplierUseCase } from "../useCases/CreateSupplier/createSupplierUseCase"
 import { CreateProductUseCase } from "../useCases/CreateProduct/createProductUseCase"
 import { CreatePersonUseCase } from "../useCases/CreatePerson/createPersonUseCase"
+import { CreateSupplyUseCase } from "../useCases/CreateSupply/createSupplyUseCase"
 
 import { DeleteProductUseCase } from "../useCases/DeleteProduct/deleteProductUseCase"
 import { DeleteSupplierUseCase } from "../useCases/DeleteSupplier/deleteSupplierUseCase"
 import { DeletePersonUseCase } from "../useCases/DeletePerson/deletePersonUseCase"
-
+import { DeleteSupplyUseCase } from "../useCases/DeleteSupply/deleteSupplyUseCase"
 
 import { UpdateProductUseCase } from "../useCases/UpdateProduct/updateProductUseCase"
 import { UpdateSupplierUseCase } from "../useCases/UpdateSupplier/updateSupplierUseCase"
 import { UpdatePersonUseCase } from "../useCases/UpdatePerson/updatePersonUseCase"
-
+import { UpdateSupplyUseCase } from "../useCases/UpdateSupply/updateSupplyUseCase"
 
 import { FindByIdProductUseCase } from "../useCases/FindByIdProduct/findByIdProductUseCase"
 import { FindByIdSupplierUseCase } from "../useCases/FindByIdSupplier/findByIdSupplierUseCase"
 import { FindByIdPersonUseCase } from "../useCases/FindByIdPerson/findByIdPersonUseCase"
+import { FindByIdSupplyUseCase } from "../useCases/FindByIdSupply/findByIdSupplierUseCase"
 
 import { FindAllProductsUseCase } from "../useCases/FindAllProduct/findAllProductsUsecase"
 import { FindAllSuppliersUseCase } from "../useCases/FindAllSupplier/findAllSupplierUseCase"
 import { FindAllPersonsUseCase } from "../useCases/FindAllPerson/findAllPersonUseCase"
+import { FindAllSuppliesUseCase } from "../useCases/FindAllSupply/findAllSuppliesUseCase"
 
 
 import {PostgreSqlContainer} from "@testcontainers/postgresql"
 import { sequelizeInitURI } from "../database/connection"
 import { password } from "bun"
-
 
 
 describe("Testes unitários com os UseCases sem autenticação", () => {
@@ -212,7 +215,7 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
         let response: any = await createPersonUseCase.execute(person)
         expect(async () => {return await deletePersonUseCase.execute(response.dataValues.id)}).not.toThrow()
     })
-    
+
     /// Product UsesCases 
 
     test("Deve criar um produto", async () => {
@@ -335,4 +338,230 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
         expect(async () => {return await deleteProductUseCase.execute(response.dataValues.barcode, supplierExemplo.dataValues.id)}).not.toThrow()
     })
 
+    /// Supply UsesCase 
+
+    test("Deve criar um supply", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+
+        const productRepository = await new ProductRepository(sequelize)
+        const createProductUseCase = await new CreateProductUseCase(productRepository)
+
+        const supplyRepository = await new SupplyRepository(sequelize)
+        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+
+        let personResponse: any = await createPersonUseCase.execute(person)
+
+        const product = {
+            name: "Produto Exemplo",
+            description: "Um produto de exemplo para teste.",
+            price: 29.99,
+            batch: "BATCH202409",
+            manufacturing_date: "2024-01-15",
+            expiration_date: "2025-01-15",
+            ammount: 100,
+            type: "Eletrônicos",
+            supplier_id: supplierExemplo.dataValues.id
+        }
+
+        let productResponse: any = await createProductUseCase.execute(product)
+
+        const supply: any = {
+            product_id: productResponse.dataValues.barcode,
+            supplier_id: supplierExemplo.dataValues.id,
+            person_id: personResponse.dataValues.id
+        }
+
+        expect(async () => {return await createSupplyUseCase.execute(supply)}).not.toThrow()
+    })
+
+    test("Deve retornar todos os supply cadastrado", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+
+        const productRepository = await new ProductRepository(sequelize)
+        const createProductUseCase = await new CreateProductUseCase(productRepository)
+
+        const supplyRepository = await new SupplyRepository(sequelize)
+        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
+        const findAllSupplyUseCase = await new FindAllSuppliesUseCase(supplyRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+
+        let personResponse: any = await createPersonUseCase.execute(person)
+
+        const product = {
+            name: "Produto Exemplo",
+            description: "Um produto de exemplo para teste.",
+            price: 29.99,
+            batch: "BATCH202409",
+            manufacturing_date: "2024-01-15",
+            expiration_date: "2025-01-15",
+            ammount: 100,
+            type: "Eletrônicos",
+            supplier_id: supplierExemplo.dataValues.id
+        }
+
+        let productResponse: any = await createProductUseCase.execute(product)
+
+        const supply: any = {
+            product_id: productResponse.dataValues.barcode,
+            supplier_id: supplierExemplo.dataValues.id,
+            person_id: personResponse.dataValues.id
+        }
+
+        await createSupplyUseCase.execute(supply)
+        expect(async () => {return await findAllSupplyUseCase.execute()}).not.toThrow()
+    })
+
+    test("Deve retornar o supply cadastrado pelo id", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+
+        const productRepository = await new ProductRepository(sequelize)
+        const createProductUseCase = await new CreateProductUseCase(productRepository)
+
+        const supplyRepository = await new SupplyRepository(sequelize)
+        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
+        const findByIdSupplyUseCase = await new FindByIdSupplyUseCase(supplyRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+
+        let personResponse: any = await createPersonUseCase.execute(person)
+
+        const product = {
+            name: "Produto Exemplo",
+            description: "Um produto de exemplo para teste.",
+            price: 29.99,
+            batch: "BATCH202409",
+            manufacturing_date: "2024-01-15",
+            expiration_date: "2025-01-15",
+            ammount: 100,
+            type: "Eletrônicos",
+            supplier_id: supplierExemplo.dataValues.id
+        }
+
+        let productResponse: any = await createProductUseCase.execute(product)
+
+        const supply: any = {
+            product_id: productResponse.dataValues.barcode,
+            supplier_id: supplierExemplo.dataValues.id,
+            person_id: personResponse.dataValues.id
+        }
+
+        let response: any = await createSupplyUseCase.execute(supply)
+        expect(async () => {return await findByIdSupplyUseCase.execute(response.dataValues.id)}).not.toThrow()
+    })
+
+    test("Deve atualizar o supply cadastrado pelo id", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+
+        const productRepository = await new ProductRepository(sequelize)
+        const createProductUseCase = await new CreateProductUseCase(productRepository)
+
+        const supplyRepository = await new SupplyRepository(sequelize)
+        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
+        const updateSupplyUseCase = await new UpdateSupplyUseCase(supplyRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+
+        const newPerson: any = {
+            name: "Osvaldo",
+            password: "12345",
+            type: "PJ"
+        }
+
+        let personMockOne: any = await createPersonUseCase.execute(person)
+        let personMockTwo: any = await createPersonUseCase.execute(newPerson)
+
+        const product = {
+            name: "Produto Exemplo",
+            description: "Um produto de exemplo para teste.",
+            price: 29.99,
+            batch: "BATCH202409",
+            manufacturing_date: "2024-01-15",
+            expiration_date: "2025-01-15",
+            ammount: 100,
+            type: "Eletrônicos",
+            supplier_id: supplierExemplo.dataValues.id
+        }
+
+        let productResponse: any = await createProductUseCase.execute(product)
+
+        const supply: any = {
+            product_id: productResponse.dataValues.barcode,
+            supplier_id: supplierExemplo.dataValues.id,
+            person_id: personMockOne.dataValues.id
+        }
+
+        const newSupply: any = {
+            product_id: productResponse.dataValues.barcode,
+            supplier_id: supplierExemplo.dataValues.id,
+            person_id: personMockTwo.dataValues.id
+        }
+
+        let response: any = await createSupplyUseCase.execute(supply)
+        expect(async () => {return await updateSupplyUseCase.execute(newSupply, response.dataValues.id)}).not.toThrow()
+    })
+
+    test("Deve deletar o supply cadastrado pelo id", async () => {
+        const personRepository = await new PersonRepository(sequelize)
+        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+
+        const productRepository = await new ProductRepository(sequelize)
+        const createProductUseCase = await new CreateProductUseCase(productRepository)
+
+        const supplyRepository = await new SupplyRepository(sequelize)
+        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
+        const deleteSupplyUseCase = await new DeleteSupplyUseCase(supplyRepository)
+
+        const person: any = {
+            name: "Gabriel",
+            password: "654123",
+            type: "PJ"
+        }
+        let personMock: any = await createPersonUseCase.execute(person)
+
+        const product = {
+            name: "Produto Exemplo",
+            description: "Um produto de exemplo para teste.",
+            price: 29.99,
+            batch: "BATCH202409",
+            manufacturing_date: "2024-01-15",
+            expiration_date: "2025-01-15",
+            ammount: 100,
+            type: "Eletrônicos",
+            supplier_id: supplierExemplo.dataValues.id
+        }
+
+        let productResponse: any = await createProductUseCase.execute(product)
+
+        const supply: any = {
+            product_id: productResponse.dataValues.barcode,
+            supplier_id: supplierExemplo.dataValues.id,
+            person_id: personMock.dataValues.id
+        }
+
+        let response: any = await createSupplyUseCase.execute(supply)
+        expect(async () => {return await deleteSupplyUseCase.execute(response.dataValues.id)}).not.toThrow()
+    })
 })
