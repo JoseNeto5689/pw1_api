@@ -1,14 +1,30 @@
 import { SupplierRepository } from "../repositories/implementations/SupplierRepository"
+import { ProductRepository } from "../repositories/implementations/ProductRepository"
+import { PersonRepository } from "../repositories/implementations/PersonRepository"
+
 import { CreateSupplierUseCase } from "../useCases/CreateSupplier/createSupplierUseCase"
 import { CreateProductUseCase } from "../useCases/CreateProduct/createProductUseCase"
-import { ProductRepository } from "../repositories/implementations/ProductRepository"
+import { CreatePersonUseCase } from "../useCases/CreatePerson/createPersonUseCase"
+
 import { DeleteProductUseCase } from "../useCases/DeleteProduct/deleteProductUseCase"
+import { DeleteSupplierUseCase } from "../useCases/DeleteSupplier/deleteSupplierUseCase"
+
+
 import { UpdateProductUseCase } from "../useCases/UpdateProduct/updateProductUseCase"
+import { UpdateSupplierUseCase } from "../useCases/UpdateSupplier/updateSupplierUseCase"
+
+
 import { FindByIdProductUseCase } from "../useCases/FindByIdProduct/findByIdProductUseCase"
+import { FindByIdSupplierUseCase } from "../useCases/FindByIdSupplier/findByIdSupplierUseCase"
+
 import { FindAllProductsUseCase } from "../useCases/FindAllProduct/findAllProductsUsecase"
+import { FindAllSuppliersUseCase } from "../useCases/FindAllSupplier/findAllSupplierUseCase"
+
+
 import {PostgreSqlContainer} from "@testcontainers/postgresql"
 import { sequelizeInitURI } from "../database/connection"
 import { password } from "bun"
+
 
 
 describe("Testes unitários com os UseCases sem autenticação", () => {
@@ -25,23 +41,93 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
         const supplierRepository = await new SupplierRepository(sequelize)
         const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
 
-        const data: any = {
+        const supplier: any = {
             name: "Samuel",
             password: "1234"
         }
 
-        supplierExemplo = await createSupplierUseCase.execute(data)
+        supplierExemplo = await createSupplierUseCase.execute(supplier)
     })
 
-    test("Deve adicionar e selecionar uma pessoa", async () => {
+
+    // Supplier UseCases
+
+    test("Deve criar um supplier", async () => {
         const supplierRepository = await new SupplierRepository(sequelize)
         const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
-        const data:any = {
-            name: "Samuel",
-            password: "bandido"
+
+        const supplier: any = {
+            name: "Gabriel",
+            password: "654123"
         }
+
+        expect(async () => {return await createSupplierUseCase.execute(supplier)}).not.toThrow()
+    })
+
+    test("Deve retornar todos os produtos cadastrados", async () => {
+        const supplierRepository = await new SupplierRepository(sequelize)
+        const findAllSupplierUseCase = await new FindAllSuppliersUseCase(supplierRepository)
+        const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
+
+        const supplier: any = {
+            name: "Gabriel",
+            password: "654123"
+        }
+
+        await createSupplierUseCase.execute(supplier)
+        expect(async () => {return await findAllSupplierUseCase.execute()}).not.toThrow()
+
+
+    })
+
+    test("Deve retornar o supplier pelo id", async () => {
+        const supplierRepository = await new SupplierRepository(sequelize)
+        const findByIdSupplierUseCase = await new FindByIdSupplierUseCase(supplierRepository)
+        const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
+
+        const supplier: any = {
+            name: "Osvaldo",
+            password: "654123"
+        }
+
+        let response: any = await createSupplierUseCase.execute(supplier)
+        expect(async () => {return await findByIdSupplierUseCase.execute(response.dataValues.id)}).not.toThrow()
+
+    })
+
+    test("Deve atualizar um supplier cadastrado pelo id", async () => {
+        const supplierRepository = await new SupplierRepository(sequelize)
+        const updateSupplierUseCase = await new UpdateSupplierUseCase(supplierRepository)
+        const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
+
+        const supplier: any = {
+            name: "Osvaldo",
+            password: "654123"
+        }
+
+        const updateSupplier: any = {
+            name: "Osvaldo Code",
+            password: "654123"
+        }
+
+        let response: any = await createSupplierUseCase.execute(supplier)
+        expect(async () => {return await updateSupplierUseCase.execute(updateSupplier, response.dataValues.id)}).not.toThrow()
+    })
+
+    test("Deve deletar um supplier pelo id", async () => {
+        const supplierRepository = await new SupplierRepository(sequelize)
+        const deleteSupplierUseCase = await new DeleteSupplierUseCase(supplierRepository)
+        const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
+
+        const supplier: any = {
+            name: "Osvaldo",
+            password: "654123"
+        }
+
+        let response: any = await createSupplierUseCase.execute(supplier)
+        console.log(await deleteSupplierUseCase.execute(response.dataValues.id));
         
-        expect(async () => {return await createSupplierUseCase.execute(data)}).not.toThrow()
+
     })
 
     /// Product UsesCases 
@@ -165,8 +251,5 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
 
         expect(async () => {return await deleteProductUseCase.execute(response.dataValues.barcode, supplierExemplo.dataValues.id)}).not.toThrow()
     })
-
-
-
 
 })
