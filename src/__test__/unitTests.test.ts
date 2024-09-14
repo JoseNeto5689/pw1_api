@@ -28,13 +28,11 @@ import { FindAllSuppliersUseCase } from "../useCases/FindAllSupplier/findAllSupp
 import { FindAllPersonsUseCase } from "../useCases/FindAllPerson/findAllPersonUseCase"
 import { FindAllSuppliesUseCase } from "../useCases/FindAllSupply/findAllSuppliesUseCase"
 
-
 import {PostgreSqlContainer} from "@testcontainers/postgresql"
 import { sequelizeInitURI } from "../database/connection"
-import { password } from "bun"
 
 
-describe("Testes unitários com os UseCases sem autenticação", () => {
+describe("Unit tests with Use Cases without authentication", () => {
     jest.setTimeout(15000)
     let sequelize: any = null
     let container: any = null
@@ -45,6 +43,7 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
         sequelize = sequelizeInitURI(container.getConnectionUri())
         await sequelize.sync({force: true})
 
+        // create a mock supplier
         const supplierRepository = await new SupplierRepository(sequelize)
         const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
 
@@ -56,12 +55,11 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
         supplierExemplo = await createSupplierUseCase.execute(supplier)
     })
 
-
-    /// Supplier UseCases
+    /// SupplierUseCases tests
 
     test("Deve criar um supplier", async () => {
-        const supplierRepository = await new SupplierRepository(sequelize)
-        const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
+        const supplierRepository = new SupplierRepository(sequelize)
+        const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository)
 
         const supplier: any = {
             name: "Gabriel",
@@ -72,9 +70,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve retornar todos os produtos cadastrados", async () => {
-        const supplierRepository = await new SupplierRepository(sequelize)
-        const findAllSupplierUseCase = await new FindAllSuppliersUseCase(supplierRepository)
-        const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
+        const supplierRepository = new SupplierRepository(sequelize)
+        const findAllSupplierUseCase = new FindAllSuppliersUseCase(supplierRepository)
+        const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository)
 
         const supplier: any = {
             name: "Gabriel",
@@ -83,14 +81,12 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
 
         await createSupplierUseCase.execute(supplier)
         expect(async () => {return await findAllSupplierUseCase.execute()}).not.toThrow()
-
-
     })
 
     test("Deve retornar o supplier pelo id", async () => {
-        const supplierRepository = await new SupplierRepository(sequelize)
-        const findByIdSupplierUseCase = await new FindByIdSupplierUseCase(supplierRepository)
-        const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
+        const supplierRepository = new SupplierRepository(sequelize)
+        const findByIdSupplierUseCase = new FindByIdSupplierUseCase(supplierRepository)
+        const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository)
 
         const supplier: any = {
             name: "Osvaldo",
@@ -99,13 +95,12 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
 
         let response: any = await createSupplierUseCase.execute(supplier)
         expect(async () => {return await findByIdSupplierUseCase.execute(response.dataValues.id)}).not.toThrow()
-
     })
 
     test("Deve atualizar um supplier cadastrado pelo id", async () => {
-        const supplierRepository = await new SupplierRepository(sequelize)
-        const updateSupplierUseCase = await new UpdateSupplierUseCase(supplierRepository)
-        const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
+        const supplierRepository = new SupplierRepository(sequelize)
+        const updateSupplierUseCase = new UpdateSupplierUseCase(supplierRepository)
+        const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository)
 
         const supplier: any = {
             name: "Osvaldo",
@@ -122,9 +117,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve deletar um supplier pelo id", async () => {
-        const supplierRepository = await new SupplierRepository(sequelize)
-        const deleteSupplierUseCase = await new DeleteSupplierUseCase(supplierRepository)
-        const createSupplierUseCase = await new CreateSupplierUseCase(supplierRepository)
+        const supplierRepository = new SupplierRepository(sequelize)
+        const deleteSupplierUseCase =  new DeleteSupplierUseCase(supplierRepository)
+        const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository)
 
         const supplier: any = {
             name: "Osvaldo",
@@ -135,11 +130,11 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
         expect(async () => {return await deleteSupplierUseCase.execute(response.dataValues.id)}).not.toThrow()
     })
         
-    /// Person UsesCases
+    /// PersonUsesCases tests
 
     test("Deve criar um person", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
 
         const person: any = {
             name: "Gabriel",
@@ -151,9 +146,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve retornar todos os person cadastrado", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
-        const findAllPersonUseCase = await new FindAllPersonsUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
+        const findAllPersonUseCase = new FindAllPersonsUseCase(personRepository)
 
         const person: any = {
             name: "Gabriel",
@@ -166,9 +161,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve retornar um person cadastrado pelo id", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
-        const findByIdPersonUseCase = await new FindByIdPersonUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
+        const findByIdPersonUseCase = new FindByIdPersonUseCase(personRepository)
 
         const person: any = {
             name: "Gabriel",
@@ -181,9 +176,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve atualizar um person cadastrado pelo id", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
-        const updatePersonUseCase = await new UpdatePersonUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
+        const updatePersonUseCase = new UpdatePersonUseCase(personRepository)
 
         const person: any = {
             name: "Gabriel",
@@ -202,9 +197,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve deletar um person cadastrado pelo id", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
-        const deletePersonUseCase = await new DeletePersonUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
+        const deletePersonUseCase = new DeletePersonUseCase(personRepository)
 
         const person: any = {
             name: "Gabriel",
@@ -216,11 +211,11 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
         expect(async () => {return await deletePersonUseCase.execute(response.dataValues.id)}).not.toThrow()
     })
 
-    /// Product UsesCases 
+    /// ProductUsesCases tests
 
     test("Deve criar um produto", async () => {
-        const productRepository = await new ProductRepository(sequelize)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
         const product = {
             name: "Produto Exemplo",
@@ -238,9 +233,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve retornar todos os produtos cadastrados", async () => {
-        const productRepository = await new ProductRepository(sequelize)
-        const findAllProductsUseCase = await new FindAllProductsUseCase(productRepository)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const findAllProductsUseCase = new FindAllProductsUseCase(productRepository)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
         const product = {
             name: "Produto Exemplo",
@@ -260,9 +255,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve retornar um produto cadastrado pelo barcode", async () => {
-        const productRepository = await new ProductRepository(sequelize)
-        const findByIdProductsUseCase = await new FindByIdProductUseCase(productRepository)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const findByIdProductsUseCase = new FindByIdProductUseCase(productRepository)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
         const product = {
             name: "Produto Exemplo",
@@ -282,9 +277,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve atualizar um produto cadastrado pelo barcode", async () => {
-        const productRepository = await new ProductRepository(sequelize)
-        const updateProductUseCase = await new UpdateProductUseCase(productRepository)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const updateProductUseCase = new UpdateProductUseCase(productRepository)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
         const product = {
             name: "Produto Exemplo",
@@ -316,9 +311,9 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve deletar um produto cadastrado pelo barcode", async () => {
-        const productRepository = await new ProductRepository(sequelize)
-        const deleteProductUseCase = await new DeleteProductUseCase(productRepository)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const deleteProductUseCase = new DeleteProductUseCase(productRepository)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
         const product = {
             name: "Produto Exemplo",
@@ -333,22 +328,21 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
         }
 
         let response: any = await createProductUseCase.execute(product)
-        console.log(response.dataValues)
 
         expect(async () => {return await deleteProductUseCase.execute(response.dataValues.barcode, supplierExemplo.dataValues.id)}).not.toThrow()
     })
 
-    /// Supply UsesCase 
+    /// SupplyUsesCase tests 
 
     test("Deve criar um supply", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
 
-        const productRepository = await new ProductRepository(sequelize)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
-        const supplyRepository = await new SupplyRepository(sequelize)
-        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
+        const supplyRepository = new SupplyRepository(sequelize)
+        const createSupplyUseCase =  new CreateSupplyUseCase(supplyRepository)
 
         const person: any = {
             name: "Gabriel",
@@ -382,15 +376,15 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve retornar todos os supply cadastrado", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
 
-        const productRepository = await new ProductRepository(sequelize)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
-        const supplyRepository = await new SupplyRepository(sequelize)
-        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
-        const findAllSupplyUseCase = await new FindAllSuppliesUseCase(supplyRepository)
+        const supplyRepository = new SupplyRepository(sequelize)
+        const createSupplyUseCase = new CreateSupplyUseCase(supplyRepository)
+        const findAllSupplyUseCase = new FindAllSuppliesUseCase(supplyRepository)
 
         const person: any = {
             name: "Gabriel",
@@ -425,15 +419,15 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve retornar o supply cadastrado pelo id", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
 
-        const productRepository = await new ProductRepository(sequelize)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
-        const supplyRepository = await new SupplyRepository(sequelize)
-        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
-        const findByIdSupplyUseCase = await new FindByIdSupplyUseCase(supplyRepository)
+        const supplyRepository = new SupplyRepository(sequelize)
+        const createSupplyUseCase = new CreateSupplyUseCase(supplyRepository)
+        const findByIdSupplyUseCase = new FindByIdSupplyUseCase(supplyRepository)
 
         const person: any = {
             name: "Gabriel",
@@ -468,15 +462,15 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve atualizar o supply cadastrado pelo id", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
 
-        const productRepository = await new ProductRepository(sequelize)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
-        const supplyRepository = await new SupplyRepository(sequelize)
-        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
-        const updateSupplyUseCase = await new UpdateSupplyUseCase(supplyRepository)
+        const supplyRepository = new SupplyRepository(sequelize)
+        const createSupplyUseCase = new CreateSupplyUseCase(supplyRepository)
+        const updateSupplyUseCase = new UpdateSupplyUseCase(supplyRepository)
 
         const person: any = {
             name: "Gabriel",
@@ -524,15 +518,15 @@ describe("Testes unitários com os UseCases sem autenticação", () => {
     })
 
     test("Deve deletar o supply cadastrado pelo id", async () => {
-        const personRepository = await new PersonRepository(sequelize)
-        const createPersonUseCase = await new CreatePersonUseCase(personRepository)
+        const personRepository = new PersonRepository(sequelize)
+        const createPersonUseCase = new CreatePersonUseCase(personRepository)
 
-        const productRepository = await new ProductRepository(sequelize)
-        const createProductUseCase = await new CreateProductUseCase(productRepository)
+        const productRepository = new ProductRepository(sequelize)
+        const createProductUseCase = new CreateProductUseCase(productRepository)
 
-        const supplyRepository = await new SupplyRepository(sequelize)
-        const createSupplyUseCase = await new CreateSupplyUseCase(supplyRepository)
-        const deleteSupplyUseCase = await new DeleteSupplyUseCase(supplyRepository)
+        const supplyRepository =  new SupplyRepository(sequelize)
+        const createSupplyUseCase = new CreateSupplyUseCase(supplyRepository)
+        const deleteSupplyUseCase = new DeleteSupplyUseCase(supplyRepository)
 
         const person: any = {
             name: "Gabriel",
