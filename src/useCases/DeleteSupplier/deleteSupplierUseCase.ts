@@ -6,7 +6,8 @@ export class DeleteSupplierUseCase {
         private supplierRepository: ISupplierRepository
     ) {}
 
-    async execute(id: string): Promise<void> {
+    async execute(id: string): Promise<string> {
         await this.supplierRepository.remove(id)
+        return "Supplier deleted successfully"
     }
 }
