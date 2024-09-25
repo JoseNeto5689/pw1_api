@@ -2,9 +2,10 @@ import { PersonRepository } from "../../repositories/implementations/PersonRepos
 import { CreatePersonController } from "./createPersonController"
 import { CreatePersonUseCase } from "./createPersonUseCase"
 import sequelize from "../../database/index"
+import * as bcrypt from "bcryptjs"
 
 const personRepository = new PersonRepository(sequelize)
-const createPersonUseCase = new CreatePersonUseCase(personRepository)
+const createPersonUseCase = new CreatePersonUseCase(personRepository, bcrypt.hash)
 const createPersonController = new CreatePersonController(createPersonUseCase)
 
 export { createPersonUseCase, createPersonController }
