@@ -1,14 +1,20 @@
 import { IPersonRepository } from "../repositories/IPersonRepository"
+import { IProductRepository } from "../repositories/IProductRepository"
 import { ISupplierRepository } from "../repositories/ISupplierRepository"
 import { CreatePersonUseCase } from "../useCases/CreatePerson/createPersonUseCase"
+import { CreateProductUseCase } from "../useCases/CreateProduct/createProductUseCase"
 import { CreateSupplierUseCase } from "../useCases/CreateSupplier/createSupplierUseCase"
 import { DeletePersonUseCase } from "../useCases/DeletePerson/deletePersonUseCase"
+import { DeleteProductUseCase } from "../useCases/DeleteProduct/deleteProductUseCase"
 import { DeleteSupplierUseCase } from "../useCases/DeleteSupplier/deleteSupplierUseCase"
 import { FindAllPersonsUseCase } from "../useCases/FindAllPerson/findAllPersonUseCase"
+import { FindAllProductsUseCase } from "../useCases/FindAllProduct/findAllProductsUsecase"
 import { FindAllSuppliersUseCase } from "../useCases/FindAllSupplier/findAllSupplierUseCase"
 import { FindByIdPersonUseCase } from "../useCases/FindByIdPerson/findByIdPersonUseCase"
+import { FindByIdProductUseCase } from "../useCases/FindByIdProduct/findByIdProductUseCase"
 import { FindByIdSupplierUseCase } from "../useCases/FindByIdSupplier/findByIdSupplierUseCase"
 import { UpdatePersonUseCase } from "../useCases/UpdatePerson/updatePersonUseCase"
+import { UpdateProductUseCase } from "../useCases/UpdateProduct/updateProductUseCase"
 import { UpdateSupplierUseCase } from "../useCases/UpdateSupplier/updateSupplierUseCase"
 
 
@@ -29,6 +35,15 @@ describe("Unit tests", () => {
         save: jest.fn().mockReturnValue("supplier"),
         findAll: jest.fn(),
         findById: jest.fn(),
+        remove: jest.fn(),
+        update: jest.fn()
+    }
+
+    const repositoryProduct: IProductRepository = {
+        save: jest.fn().mockReturnValue("product"),
+        findAll: jest.fn(),
+        findById: jest.fn(),
+        findBySupplierId: jest.fn(),
         remove: jest.fn(),
         update: jest.fn()
     }
@@ -195,19 +210,140 @@ describe("Unit tests", () => {
     
         expect(repositoryPerson.remove).toHaveBeenCalledWith(mockPersonId);
     });
-    
-    
-    
-    // it("should pass", () => {
-    //     //Trocar o findAll esse para o save
-    //     repositoryPerson.findAll = jest.fn().mockReturnValue("Ola")
-    //     const createPersonUseCase = new CreatePersonUseCase(repositoryPerson, hash)
-    //     createPersonUseCase.execute({
-    //         name: "test",
-    //         age: 1,
-    //     })
 
-    //     //Corrigir para esperar que o useCase n lançe um erro
-    //     expect(1 + 1).toBe(2)
-    // })
+    // Unit Tests - Product 
+
+    it('Deve criar um product', async () => {
+        const mockProduct = {
+            barcode: '1234567890123',
+            name: 'Produto Exemplo',
+            description: 'Descrição do Produto Exemplo',
+            price: 19.99,
+            batch: 'Lote123',
+            manufacturing_date: '2023-01-15',
+            expiration_date: '2025-01-15',
+            image: 'https://example.com/imagem-produto.jpg',
+            ammount: 100,
+            type: 'Categoria A',
+            supplier_id: '550e8400-e29b-41d4-a716-446655440000',
+        };
+    
+        repositoryProduct.save = jest.fn().mockResolvedValue(mockProduct);
+        const createProductUseCase = new CreateProductUseCase(repositoryProduct);
+    
+        await expect(createProductUseCase.execute(mockProduct)).resolves.toEqual(mockProduct);
+    });
+    
+    it('Deve retornar todos os products cadastrados', async () => {
+        const mockProducts = [
+            {
+                barcode: '1234567890123',
+                name: 'Produto Exemplo 1',
+                description: 'Descrição do Produto 1',
+                price: 19.99,
+                batch: 'Lote123',
+                manufacturing_date: '2023-01-15',
+                expiration_date: '2025-01-15',
+                image: 'https://example.com/imagem-produto1.jpg',
+                ammount: 100,
+                type: 'Categoria A',
+                supplier_id: '550e8400-e29b-41d4-a716-446655440000',
+            },
+            {
+                barcode: '9876543210987',
+                name: 'Produto Exemplo 2',
+                description: 'Descrição do Produto 2',
+                price: 29.99,
+                batch: 'Lote456',
+                manufacturing_date: '2023-02-10',
+                expiration_date: '2025-02-10',
+                image: 'https://example.com/imagem-produto2.jpg',
+                ammount: 50,
+                type: 'Categoria B',
+                supplier_id: '12345678-e29b-41d4-a716-446655440001',
+            },
+        ];
+    
+        repositoryProduct.findAll = jest.fn().mockResolvedValue(mockProducts);
+        const findAllProductsUseCase = new FindAllProductsUseCase(repositoryProduct);
+    
+        await expect(findAllProductsUseCase.execute()).resolves.toEqual(mockProducts);
+    });
+
+    it('Deve retornar um product cadastrado pelo id', async () => {
+        const mockProduct = {
+            barcode: '1234567890123',
+            name: 'Produto Exemplo',
+            description: 'Descrição do Produto Exemplo',
+            price: 19.99,
+            batch: 'Lote123',
+            manufacturing_date: '2023-01-15',
+            expiration_date: '2025-01-15',
+            image: 'https://example.com/imagem-produto.jpg',
+            ammount: 100,
+            type: 'Categoria A',
+            supplier_id: '550e8400-e29b-41d4-a716-446655440000',
+        };
+    
+        repositoryProduct.findById = jest.fn().mockResolvedValue(mockProduct);
+        const findByIdProductUseCase = new FindByIdProductUseCase(repositoryProduct);
+    
+        await expect(findByIdProductUseCase.execute(mockProduct.barcode)).resolves.toEqual(mockProduct);
+    });
+
+    it('Deve atualizar um product cadastrado pelo id', async () => {
+        const mockProductId = '1234567890123';
+        const mockSupplierId = '550e8400-e29b-41d4-a716-446655440000';
+    
+        const existingProduct = {
+            barcode: mockProductId,
+            name: 'Produto Exemplo',
+            description: 'Descrição do Produto Exemplo',
+            price: 19.99,
+            batch: 'Lote123',
+            manufacturing_date: '2023-01-15',
+            expiration_date: '2025-01-15',
+            image: 'https://example.com/imagem-produto.jpg',
+            ammount: 100,
+            type: 'Categoria A',
+            supplier_id: mockSupplierId,
+        };
+    
+        const updatedData = {
+            name: 'Produto Atualizado',
+            price: 24.99,
+        };
+    
+        repositoryProduct.findById = jest.fn().mockResolvedValue(existingProduct);
+        repositoryProduct.update = jest.fn().mockResolvedValue({ ...existingProduct, ...updatedData });
+    
+        const updateProductUseCase = new UpdateProductUseCase(repositoryProduct);
+    
+        await expect(updateProductUseCase.execute(updatedData, mockProductId, mockSupplierId)).resolves.toEqual({
+            ...existingProduct,
+            ...updatedData,
+        });
+    });
+    
+    it('Deve deletar um product pelo id', async () => {
+        const mockProductId = '1234567890123';
+        const mockSupplierId = '550e8400-e29b-41d4-a716-446655440000';
+    
+        const existingProduct = {
+            barcode: mockProductId,
+            name: 'Produto Exemplo',
+            supplier_id: mockSupplierId,
+        };
+    
+        repositoryProduct.findById = jest.fn().mockResolvedValue(existingProduct);
+        repositoryProduct.remove = jest.fn().mockResolvedValue(undefined);
+        
+        const deleteProductUseCase = new DeleteProductUseCase(repositoryProduct);
+        
+        await expect(deleteProductUseCase.execute(mockProductId, mockSupplierId)).resolves.toBeUndefined();
+    
+        expect(repositoryProduct.remove).toHaveBeenCalledWith(mockProductId);
+    });
+    
+
 })

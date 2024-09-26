@@ -9,6 +9,15 @@ export class CreateProductUseCase {
     ) {}
 
     async execute(data: any) {
+
+        if (!data.supplier_id) {
+            throw Error('Supplier id não informado');
+        }
+
+        if (data.name.lenght < 4) {
+            throw Error('Nome muito curto');
+        }
+
         const product = new Product(data)
         return await this.productRepository.save(product)
     }
