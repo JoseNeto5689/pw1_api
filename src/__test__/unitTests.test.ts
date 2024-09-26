@@ -1,21 +1,27 @@
 import { IPersonRepository } from "../repositories/IPersonRepository"
 import { IProductRepository } from "../repositories/IProductRepository"
 import { ISupplierRepository } from "../repositories/ISupplierRepository"
+import { ISupplyRepository } from "../repositories/ISupplyRepository"
 import { CreatePersonUseCase } from "../useCases/CreatePerson/createPersonUseCase"
 import { CreateProductUseCase } from "../useCases/CreateProduct/createProductUseCase"
 import { CreateSupplierUseCase } from "../useCases/CreateSupplier/createSupplierUseCase"
+import { CreateSupplyUseCase } from "../useCases/CreateSupply/createSupplyUseCase"
 import { DeletePersonUseCase } from "../useCases/DeletePerson/deletePersonUseCase"
 import { DeleteProductUseCase } from "../useCases/DeleteProduct/deleteProductUseCase"
 import { DeleteSupplierUseCase } from "../useCases/DeleteSupplier/deleteSupplierUseCase"
+import { DeleteSupplyUseCase } from "../useCases/DeleteSupply/deleteSupplyUseCase"
 import { FindAllPersonsUseCase } from "../useCases/FindAllPerson/findAllPersonUseCase"
 import { FindAllProductsUseCase } from "../useCases/FindAllProduct/findAllProductsUsecase"
 import { FindAllSuppliersUseCase } from "../useCases/FindAllSupplier/findAllSupplierUseCase"
+import { FindAllSuppliesUseCase } from "../useCases/FindAllSupply/findAllSuppliesUseCase"
 import { FindByIdPersonUseCase } from "../useCases/FindByIdPerson/findByIdPersonUseCase"
 import { FindByIdProductUseCase } from "../useCases/FindByIdProduct/findByIdProductUseCase"
 import { FindByIdSupplierUseCase } from "../useCases/FindByIdSupplier/findByIdSupplierUseCase"
+import { FindByIdSupplyUseCase } from "../useCases/FindByIdSupply/findByIdSupplierUseCase"
 import { UpdatePersonUseCase } from "../useCases/UpdatePerson/updatePersonUseCase"
 import { UpdateProductUseCase } from "../useCases/UpdateProduct/updateProductUseCase"
 import { UpdateSupplierUseCase } from "../useCases/UpdateSupplier/updateSupplierUseCase"
+import { UpdateSupplyUseCase } from "../useCases/UpdateSupply/updateSupplyUseCase"
 
 
 describe("Unit tests", () => {
@@ -44,6 +50,14 @@ describe("Unit tests", () => {
         findAll: jest.fn(),
         findById: jest.fn(),
         findBySupplierId: jest.fn(),
+        remove: jest.fn(),
+        update: jest.fn()
+    }
+
+    const repositorySupply: ISupplyRepository = {
+        save: jest.fn().mockReturnValue("supply"),
+        findAll: jest.fn(),
+        findById: jest.fn(),
         remove: jest.fn(),
         update: jest.fn()
     }
@@ -345,5 +359,93 @@ describe("Unit tests", () => {
         expect(repositoryProduct.remove).toHaveBeenCalledWith(mockProductId);
     });
     
+
+    // Unit Tests - Supply 
+
+    it('Deve criar um supply', async () => {
+        const mockSupply = {
+            id: "f47ac10b-58cc-4372-a567-0e02b2c3d479", 
+            product_id: "550e8400-e29b-41d4-a716-446655440000", 
+            supplier_id: "550e8400-e29b-41d4-a716-446655440001", 
+            person_id: "550e8400-e29b-41d4-a716-446655440002" 
+        };
+    
+        repositorySupply.save = jest.fn().mockResolvedValue(mockSupply);
+        const createSupplyUseCase = new CreateSupplyUseCase(repositorySupply);
+        await expect(createSupplyUseCase.execute(mockSupply)).resolves.toEqual(mockSupply);
+    });
+
+    it('Deve retornar todos os supplies cadastrados', async () => {
+        const mockSupplies = [
+            {
+                id: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                product_id: "550e8400-e29b-41d4-a716-446655440000", 
+                supplier_id: "550e8400-e29b-41d4-a716-446655440001", 
+                person_id: "550e8400-e29b-41d4-a716-446655440002"
+            },
+            {
+                id: "a0eeb6a0-7d58-4c2c-8e84-6c71c0d7c12a", 
+                product_id: "550e8400-e29b-41d4-a716-446655440003", 
+                supplier_id: "550e8400-e29b-41d4-a716-446655440004", 
+                person_id: "550e8400-e29b-41d4-a716-446655440005" 
+            }
+        ];
+    
+        repositorySupply.findAll = jest.fn().mockResolvedValue(mockSupplies);
+        const findAllSupplyUseCase = new FindAllSuppliesUseCase(repositorySupply);
+        await expect(findAllSupplyUseCase.execute()).resolves.toEqual(mockSupplies);
+    });
+
+    it('Deve retornar um supply cadastrado pelo id', async () => {
+        const mockSupply = {
+            id: "f47ac10b-58cc-4372-a567-0e02b2c3d479", 
+            product_id: "550e8400-e29b-41d4-a716-446655440000", 
+            supplier_id: "550e8400-e29b-41d4-a716-446655440001", 
+            person_id: "550e8400-e29b-41d4-a716-446655440002"
+        };
+    
+        repositorySupply.findById = jest.fn().mockResolvedValue(mockSupply);
+        const findByIdSupplyUseCase = new FindByIdSupplyUseCase(repositorySupply);
+    
+        await expect(findByIdSupplyUseCase.execute(mockSupply.id)).resolves.toEqual(mockSupply);
+    });
+    
+    it('Deve atualizar um supply cadastrado pelo id', async () => {
+        const mockSupplyId = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+    
+        const existingSupply = {
+            id: mockSupplyId,
+            product_id: "550e8400-e29b-41d4-a716-446655440000", 
+            supplier_id: "550e8400-e29b-41d4-a716-446655440001", 
+            person_id: "550e8400-e29b-41d4-a716-446655440002" 
+        };
+    
+        const updatedData = {
+            product_id: "550e8400-e29b-41d4-a716-446655440005", 
+        };
+    
+        repositorySupply.findById = jest.fn().mockResolvedValue(existingSupply);
+        repositorySupply.update = jest.fn().mockResolvedValue({
+            ...existingSupply,
+            ...updatedData,
+        });
+    
+        const updateSupplyUseCase = new UpdateSupplyUseCase(repositorySupply);
+    
+        await expect(updateSupplyUseCase.execute(updatedData, mockSupplyId)).resolves.toEqual({
+            ...existingSupply,
+            ...updatedData,
+        });
+    });
+
+    it('Deve deletar um supply pelo id', async () => {
+        const mockSupplyId = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
+        repositorySupply.remove = jest.fn().mockResolvedValue(undefined); 
+    
+        const deleteSupplyUseCase = new DeleteSupplyUseCase(repositorySupply);
+        await expect(deleteSupplyUseCase.execute(mockSupplyId)).resolves.toEqual("Supply deleted successfully");
+    
+        expect(repositorySupply.remove).toHaveBeenCalledWith(mockSupplyId);
+    });
 
 })

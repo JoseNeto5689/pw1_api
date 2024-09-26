@@ -5,7 +5,8 @@ export class DeleteSupplyUseCase {
         private supplyRepository: ISupplyRepository
     ) {}
 
-    async execute(id: string): Promise<void> {
+    async execute(id: string): Promise<string> {
         await this.supplyRepository.remove(id)
+        return "Supply deleted successfully"
     }
 }
