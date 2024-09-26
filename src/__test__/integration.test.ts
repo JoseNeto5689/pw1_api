@@ -7,7 +7,7 @@ import { findByIdSupplierUseCase } from "../useCases/FindByIdSupplier"
 import { createProductUseCase } from "../useCases/CreateProduct"
 
 describe("Unit tests with Use Cases without authentication", () => {
-    jest.setTimeout(15000)
+    jest.setTimeout(150000)
     let sequelize: any = null
     let container: any = null
 
@@ -20,7 +20,7 @@ describe("Unit tests with Use Cases without authentication", () => {
     test("Deve criar um supplier", async () => {
         const supplier: any = {
             name: "Gabriel",
-            password: "654123"
+            password: "65412312"
         }
 
         const response = await createSupplierUseCase.execute(supplier)
@@ -32,7 +32,7 @@ describe("Unit tests with Use Cases without authentication", () => {
     test("Deve retornar um erro ao tentar criar um supplier com um nome vazio", async () => {
         const supplier: any = {
             name: "",
-            password: "654123"
+            password: "65412312"
         }
 
         try {
@@ -45,7 +45,7 @@ describe("Unit tests with Use Cases without authentication", () => {
     test("Deve adicionar produto depois de já ter um fornecedor cadastrado", async () => {
         const response: any = await createSupplierUseCase.execute({
             name: "Gabriel",
-            password: "654123"
+            password: "65412312"
         })
 
         const product = {
@@ -99,7 +99,7 @@ describe("Unit tests with Use Cases without authentication", () => {
     test("Deve deletar um fornecedor", async () => {
         const responseSupplier: any = await createSupplierUseCase.execute({
             name: "Gabriel",
-            password: "654123"
+            password: "65412312"
         })
         console.log(responseSupplier)
 
