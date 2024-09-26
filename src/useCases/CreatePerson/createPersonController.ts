@@ -32,8 +32,11 @@ export class CreatePersonController{
             })
         }
         catch (err:any) {
-            const message = generateMessageArray(err)
-            return response.status(400).json({errors: message})
+            if(err.issues) {
+                const message = generateMessageArray(err)
+                return response.status(400).json({errors: message}) 
+            }
+            return response.status(400).json({error: err.message})
         }
         
     }
