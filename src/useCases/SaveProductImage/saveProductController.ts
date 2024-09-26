@@ -13,10 +13,11 @@ export class SaveImageController {
     async handle(req: Request, res: Response) {
         try {
             //@ts-ignore
-            const file: any = req.file
 
-            const imageRef = ref(storage, `pw1/${file?.name}`)
-            await uploadBytes(imageRef, file as Blob)
+            const file: any = req.file
+            const imageRef = ref(storage, `pw1/${file?.originalname}`)
+            
+            await uploadBytes(imageRef, file.buffer as Blob)
             const downloadURL = await getDownloadURL(imageRef)
             await this.saveImageUseCase.execute(req.params.id, downloadURL)
 
