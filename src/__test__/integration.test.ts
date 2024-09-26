@@ -25,8 +25,8 @@ describe("Unit tests with Use Cases without authentication", () => {
 
         const response = await createSupplierUseCase.execute(supplier)
 
-        expect(response).toHaveProperty('name')
-        expect(response).toHaveProperty('password')  
+        expect(response).toHaveProperty("name")
+        expect(response).toHaveProperty("password")  
     })
 
     test("Deve retornar um erro ao tentar criar um supplier com um nome vazio", async () => {
@@ -63,16 +63,16 @@ describe("Unit tests with Use Cases without authentication", () => {
 
         const responseProduct = await createProductUseCase.execute(product)
 
-        expect(responseProduct).toHaveProperty('name')
-        expect(responseProduct).toHaveProperty('price')
-        expect(responseProduct).toHaveProperty('ammount')
-        expect(responseProduct).toHaveProperty('description')
-        expect(responseProduct).toHaveProperty('batch')
-        expect(responseProduct).toHaveProperty('expiration_date')
-        expect(responseProduct).toHaveProperty('manufacturing_date')
-        expect(responseProduct).toHaveProperty('expiration_date')
-        expect(responseProduct).toHaveProperty('type')
-        expect(responseProduct).toHaveProperty('supplier_id')
+        expect(responseProduct).toHaveProperty("name")
+        expect(responseProduct).toHaveProperty("price")
+        expect(responseProduct).toHaveProperty("ammount")
+        expect(responseProduct).toHaveProperty("description")
+        expect(responseProduct).toHaveProperty("batch")
+        expect(responseProduct).toHaveProperty("expiration_date")
+        expect(responseProduct).toHaveProperty("manufacturing_date")
+        expect(responseProduct).toHaveProperty("expiration_date")
+        expect(responseProduct).toHaveProperty("type")
+        expect(responseProduct).toHaveProperty("supplier_id")
     })
 
     test("Deve retornar um erro ao tentar adicionar um produto sem um fornecedor cadastrado", async () => {

@@ -5,10 +5,6 @@ export const CreateSupplyDTO = z.object({
         required_error: "Product is required",
         invalid_type_error: "Product must be a string",
     }),
-    supplier_id: z.string({
-        required_error: "Supplier is required",
-        invalid_type_error: "Supplier must be a string",
-    }),
     person_id: z.string({
         required_error: "Person is required",
         invalid_type_error: "Person must be a string",

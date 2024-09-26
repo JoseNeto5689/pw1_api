@@ -12,11 +12,11 @@ export class CreatePersonUseCase {
     async execute(data: any) {
 
         if (data.password.length < 8) {
-            throw Error('Senhar com tamanho menor que 8 caracteres');
+            throw Error("Senha com tamanho menor que 8 caracteres")
         }
 
         if (data.password === "") {
-            throw Error('Senhar está vazia');
+            throw Error("Senha está vazia")
         }
 
         const password = await this.hash(data.password, 8)

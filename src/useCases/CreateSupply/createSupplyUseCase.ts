@@ -23,6 +23,7 @@ export class CreateSupplyUseCase {
         }
 
         const supply = new Supply(data)
+
         return await this.supplyRepository.save(supply)
     }
 }
