@@ -1,4 +1,3 @@
-import sequelize from "../../database/index"
 import { Product } from "../../types/Product"
 import { IProductRepository } from "../IProductRepository"
 
@@ -49,7 +48,7 @@ export class ProductRepository implements IProductRepository {
         })
     }
 
-    async update(product: Product, barcode: string): Promise<unknown> {
+    async update(product: any, barcode: string): Promise<unknown> {
         const productUpdated = await this.sequelize.models.Product.update({
             ...product
         }, {

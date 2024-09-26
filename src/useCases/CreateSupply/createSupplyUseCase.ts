@@ -1,11 +1,13 @@
 import { Supply } from "../../types/Supply"
 import { ISupplyRepository } from "../../repositories/ISupplyRepository"
+import { IProductRepository } from "../../repositories/IProductRepository"
 //import { ISupplyRequestDTO } from "./createSupplyDTO"
 
 export class CreateSupplyUseCase {
 
     constructor(
-        private supplyRepository: ISupplyRepository
+        private supplyRepository: ISupplyRepository,
+        private productRepository: IProductRepository
     ) {}
 
     async execute(data: any) {
@@ -23,6 +25,20 @@ export class CreateSupplyUseCase {
         }
 
         const supply = new Supply(data)
+
+
+        const product = await this.productRepository.findById(data.product_id)
+
+
+        if(!product || product.ammount == 0){
+            throw new Error("Produto em falta")
+        }
+
+        product.ammount = product.ammount - 1
+
+        console.log(product.ammount)
+
+        await this.productRepository.update({ammount: product.ammount}, data.product_id)
 
         return await this.supplyRepository.save(supply)
     }

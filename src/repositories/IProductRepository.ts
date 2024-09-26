@@ -6,5 +6,5 @@ export interface IProductRepository {
     findById(id: string): Promise<Product | null>
     findBySupplierId(supplier_id: string): Promise<Product[]>
     remove(bar_code: string): Promise<void>
-    update(product: Product, id: string): Promise<unknown>
+    update(product: any, id: string): Promise<unknown>
 }
