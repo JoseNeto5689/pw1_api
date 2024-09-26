@@ -3,6 +3,16 @@ import { ISupplierRepository } from "../ISupplierRepository"
 
 export class SupplierRepository implements ISupplierRepository {
     constructor(private sequelize: any) {}
+    async findByEmail(email: string): Promise<Supplier | null> {
+
+        const result: Supplier | null = await this.sequelize.models.Supplier.findOne({
+            where: {
+                email
+            }
+        }) as Supplier | null
+
+        return result
+    }
 
     async findById(id: string): Promise<Supplier | null> {
         const result: Supplier | null = await this.sequelize.models.Supplier.findByPk(id) as Supplier | null

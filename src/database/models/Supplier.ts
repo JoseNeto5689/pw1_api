@@ -36,6 +36,12 @@ class Supplier extends Model {
     declare password: string
 
     @Column({
+        type: DataType.STRING,
+        allowNull: false
+    })
+    declare email: string
+
+    @Column({
         type: DataType.GEOGRAPHY,
         allowNull: true
     })

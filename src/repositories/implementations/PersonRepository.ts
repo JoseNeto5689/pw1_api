@@ -3,6 +3,14 @@ import { IPersonRepository } from "../IPersonRepository"
 
 export class PersonRepository implements IPersonRepository {
     constructor(private sequelize: any) {}
+    async findByEmail(email: string): Promise<Person | null> {
+        const result: Person | null = await this.sequelize.models.Person.findOne({
+            where: {
+                email
+            }
+        }) as Person | null
+        return result
+    }
 
     async findByName(name: string): Promise<Person | null> {
         const person = await this.sequelize.models.Person.findOne({

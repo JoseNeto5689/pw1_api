@@ -30,6 +30,12 @@ class Person extends Model {
         type: DataType.STRING,
         allowNull: false
     })
+    declare email: string
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false
+    })
     declare password: string
 
     @Column({

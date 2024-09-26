@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs"
 
 
 interface IRequest {
-    id: string
+    email: string
     password: string
 }
 
@@ -15,8 +15,9 @@ class AuthenticateUser {
     ) { }
     async handle(req: Request, res: Response) {
         try {
-            const { id, password } = <IRequest>req.body
-            const user = await this.personRepository.findById(id)
+            const { email, password } = <IRequest>req.body
+            const user = await this.personRepository.findByEmail(email)
+
 
             if (!user) {
                 return res.status(401).json({ status: "This user is not registered" })

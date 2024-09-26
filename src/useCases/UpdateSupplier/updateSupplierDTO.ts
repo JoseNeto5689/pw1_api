@@ -8,5 +8,9 @@ export const UpdateSupplierDTO = z.object({
     image: z.string().optional(),
     password: z.string({
         invalid_type_error: "Password must be a string",
+    }).optional(),
+    email: z.string({
+        invalid_type_error: "Email must be a string",
     }).optional()
+
 })
