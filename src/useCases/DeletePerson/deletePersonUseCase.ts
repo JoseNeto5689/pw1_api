@@ -8,5 +8,6 @@ export class DeletePersonUseCase {
 
     async execute(id: string) {
         await this.personRepository.remove(id)
+        return "Person deleted successfully"
     }
 }

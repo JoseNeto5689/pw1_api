@@ -2,9 +2,13 @@ import { IPersonRepository } from "../repositories/IPersonRepository"
 import { ISupplierRepository } from "../repositories/ISupplierRepository"
 import { CreatePersonUseCase } from "../useCases/CreatePerson/createPersonUseCase"
 import { CreateSupplierUseCase } from "../useCases/CreateSupplier/createSupplierUseCase"
+import { DeletePersonUseCase } from "../useCases/DeletePerson/deletePersonUseCase"
 import { DeleteSupplierUseCase } from "../useCases/DeleteSupplier/deleteSupplierUseCase"
+import { FindAllPersonsUseCase } from "../useCases/FindAllPerson/findAllPersonUseCase"
 import { FindAllSuppliersUseCase } from "../useCases/FindAllSupplier/findAllSupplierUseCase"
+import { FindByIdPersonUseCase } from "../useCases/FindByIdPerson/findByIdPersonUseCase"
 import { FindByIdSupplierUseCase } from "../useCases/FindByIdSupplier/findByIdSupplierUseCase"
+import { UpdatePersonUseCase } from "../useCases/UpdatePerson/updatePersonUseCase"
 import { UpdateSupplierUseCase } from "../useCases/UpdateSupplier/updateSupplierUseCase"
 
 
@@ -44,9 +48,8 @@ describe("Unit tests", () => {
         const createSupplierUseCase = new CreateSupplierUseCase(repositorySupplier, hash);
         
         await expect(createSupplierUseCase.execute(mockSupplier)).resolves.toEqual(mockSupplier);
-    });
+    })
     
-
     it('Deve retornar todos os produtos cadastrados', async () => {
 
         const mockSuppliers = [
@@ -99,7 +102,7 @@ describe("Unit tests", () => {
             ...existingSupplier,
             ...updatedData,
         });
-    });
+    })
 
     it('Deve deletar um supplier pelo id', async () => {
         const mockSupplierId = '550e8400-e29b-41d4-a716-446655440000';
@@ -110,10 +113,91 @@ describe("Unit tests", () => {
         await expect(deleteSupplierUseCase.execute(mockSupplierId)).resolves.toEqual("Supplier deleted successfully");
 
         expect(repositorySupplier.remove).toHaveBeenCalledWith(mockSupplierId);
+    })
+    
+    // Unit Tests - Person 
+
+    it('Deve criar um person', async () => {
+        const mockPerson = {
+            id: 'a1b2c3d4e5',
+            name: 'João da Silva',
+            type: 'Cliente',
+            password: 'senhaSegura123!',
+        }
+
+        repositoryPerson.save = jest.fn().mockResolvedValue(mockPerson)
+        const createPersonUseCase = new CreatePersonUseCase(repositoryPerson, hash);
+        await expect(createPersonUseCase.execute(mockPerson)).resolves.toEqual(mockPerson);
+    })
+
+    it('Deve retornar todos os persons cadastrados', async () => {
+
+        const mockPersons = [
+            { id: 'a1b2c3d4e5', name: 'João da Silva', type: 'Cliente', password: 'senhaSegura123!'},
+            { id: 'f6g7h8i9j0', name: 'Maria Oliveira', type: 'Fornecedor', password: 'senhaSegura456!'},
+        ];
+    
+        repositoryPerson.findAll = jest.fn().mockResolvedValue(mockPersons);
+        const findAllPersonsUseCase = new FindAllPersonsUseCase(repositoryPerson);
+        await expect(findAllPersonsUseCase.execute()).resolves.toEqual(mockPersons);
+    })
+
+    it('Deve retornar um person cadastrado pelo id', async () => {
+
+        const mockPerson = {
+            id: 'a1b2c3d4e5',
+            name: 'João da Silva',
+            type: 'Cliente',
+            password: 'senhaSegura123!',
+        };
+    
+        repositoryPerson.findById = jest.fn().mockResolvedValue(mockPerson);
+        const findByIdPersonUseCase = new FindByIdPersonUseCase(repositoryPerson);
+    
+        await expect(findByIdPersonUseCase.execute(mockPerson.id)).resolves.toEqual(mockPerson);
+    });
+
+    it('Deve atualizar um person cadastrado pelo id', async () => {
+        const mockPersonId = 'a1b2c3d4e5';
+        
+        const existingPerson = {
+            id: mockPersonId,
+            name: 'João da Silva',
+            type: 'Cliente',
+            password: 'senhaSegura123!',
+            contact: ['(11) 91234-5678'],
+        };
+        
+        const updatedData = {
+            name: 'João Atualizado',
+            contact: ['(11) 98765-4321'],
+        };
+        
+        repositoryPerson.findById = jest.fn().mockResolvedValue(existingPerson);
+        repositoryPerson.update = jest.fn().mockResolvedValue({ ...existingPerson, ...updatedData });
+        
+        const updatePersonUseCase = new UpdatePersonUseCase(repositoryPerson);
+        
+        await expect(updatePersonUseCase.execute(updatedData, mockPersonId)).resolves.toEqual({
+            ...existingPerson,
+            ...updatedData,
+        });
+    });
+
+    it('Deve deletar um person pelo id', async () => {
+        const mockPersonId = 'a1b2c3d4e5';
+    
+        repositoryPerson.remove = jest.fn().mockResolvedValue(undefined);
+        
+        const deletePersonUseCase = new DeletePersonUseCase(repositoryPerson);
+        
+        await expect(deletePersonUseCase.execute(mockPersonId)).resolves.toEqual("Person deleted successfully");
+    
+        expect(repositoryPerson.remove).toHaveBeenCalledWith(mockPersonId);
     });
     
     
-
+    
     // it("should pass", () => {
     //     //Trocar o findAll esse para o save
     //     repositoryPerson.findAll = jest.fn().mockReturnValue("Ola")
