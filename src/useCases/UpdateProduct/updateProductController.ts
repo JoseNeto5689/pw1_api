@@ -30,7 +30,8 @@ export class CreateProductController{
                 manufacturing_date: result.manufacturing_date,
                 expiration_date: result.expiration_date,
                 ammount: result.ammount,
-                type: result.type
+                type: result.type,
+                supplier_id: result.supplier_id
             })
         }
         catch(err:any){

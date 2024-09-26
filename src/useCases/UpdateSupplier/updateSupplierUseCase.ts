@@ -13,6 +13,7 @@ export class UpdateSupplierUseCase {
         const supplier = await this.supplierRepository.findById(id) as Supplier
         const newSupplier: Supplier = {
             id: supplier.id,
+            email: data.email || supplier.email,
             name: data.name || supplier.name,
             geolocalization: data.geolocalization || supplier.geolocalization,
             image: data.image || supplier.image,

@@ -18,7 +18,7 @@ export class UpdateSupplyController {
     
             const { id } = request.params
             await this.updateSupplyUseCase.execute(data, id)
-            return response.json("ok")
+            return response.json("Supplier updated successfully")
         }
         catch(err:any){
             if(err.issues) {

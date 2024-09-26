@@ -23,6 +23,7 @@ export class UpdateSupplierController{
             return response.json({
                 id: result.id,
                 name: result.name,
+                email: result.email,
                 geolocalization: result.geolocalization,
                 image: result.image,
             })
