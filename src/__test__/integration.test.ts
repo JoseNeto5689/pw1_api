@@ -20,7 +20,8 @@ describe("Unit tests with Use Cases without authentication", () => {
     test("Deve criar um supplier", async () => {
         const supplier: any = {
             name: "Gabriel",
-            password: "65412312"
+            password: "65412312",
+            email: "gabrielponteiro@gmail.com"
         }
 
         const response = await createSupplierUseCase.execute(supplier)
@@ -32,7 +33,8 @@ describe("Unit tests with Use Cases without authentication", () => {
     test("Deve retornar um erro ao tentar criar um supplier com um nome vazio", async () => {
         const supplier: any = {
             name: "",
-            password: "65412312"
+            password: "65412312",
+            email: "gabrielponteiro@gmail.com"
         }
 
         try {
@@ -45,7 +47,8 @@ describe("Unit tests with Use Cases without authentication", () => {
     test("Deve adicionar produto depois de já ter um fornecedor cadastrado", async () => {
         const response: any = await createSupplierUseCase.execute({
             name: "Gabriel",
-            password: "65412312"
+            password: "65412312",
+            email: "gabrielponteiro@gmail.com"
         })
 
         const product = {
@@ -99,7 +102,8 @@ describe("Unit tests with Use Cases without authentication", () => {
     test("Deve deletar um fornecedor", async () => {
         const responseSupplier: any = await createSupplierUseCase.execute({
             name: "Gabriel",
-            password: "65412312"
+            password: "65412312",
+            email: "gabrielponteiro@gmail.com"
         })
         console.log(responseSupplier)
 
