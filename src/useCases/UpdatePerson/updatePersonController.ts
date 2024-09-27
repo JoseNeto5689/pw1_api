@@ -15,7 +15,7 @@ export class CreatePersonController{
             UpdatePersonDTO.parse(request.body)
             const data:z.infer<typeof UpdatePersonDTO> = request.body
 
-            const id = request.body.userId
+            const id = request.userId
             const personCreated: any = await this.updatePersonUseCase.execute({
                 ...data
             }, id)

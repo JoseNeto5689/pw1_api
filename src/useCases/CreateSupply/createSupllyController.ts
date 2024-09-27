@@ -12,7 +12,7 @@ export class CreateSupplyController {
     async handle (request: Request, response: Response) {
         try {
 
-            const supplier_id = request.body.userId
+            const supplier_id = request.userId
 
             CreateSupplyDTO.parse(request.body)
 

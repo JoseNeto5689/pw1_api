@@ -1,4 +1,3 @@
-import EnsureAuthenticate from "../middlewares/EnsureAuthenticate"
 import { authenticateUser } from "../useCases/AuthenticatePerson"
 import { Application } from "express"
 import { authenticateSupplier } from "../useCases/AuthenticateSupplier"

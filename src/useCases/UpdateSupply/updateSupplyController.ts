@@ -11,8 +11,6 @@ export class UpdateSupplyController {
 
     async handle(request: Request, response: Response) {
         try {
-            const supplier_id = request.body.userId
-
             UpdateSupplyDTO.parse(request.body)
             const data:z.infer<typeof UpdateSupplyDTO> = request.body
     

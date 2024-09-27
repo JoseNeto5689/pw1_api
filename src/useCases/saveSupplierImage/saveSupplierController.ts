@@ -11,7 +11,6 @@ export class SaveImageController {
 
     async handle(req: Request, res: Response) {
         try {
-            //@ts-ignore
             
             const file: any = req.file
             const imageRef = ref(storage, `pw1/${file?.originalname}`)
@@ -20,7 +19,7 @@ export class SaveImageController {
             const downloadURL = await getDownloadURL(imageRef)
 
             await this.saveImageUseCase.execute(req.params.id, downloadURL)
-            res.json("ok")
+            res.json("Image saved")
         } catch (error) {
             console.log(error)
         }

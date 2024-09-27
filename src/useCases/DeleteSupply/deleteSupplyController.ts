@@ -11,7 +11,7 @@ export class DeleteSupplyController {
         try {
             const { id } = request.params
             await this.deleteSupplyUseCase.execute(id)
-            return response.json("ok")
+            return response.json("Supply deleted")
         }
         
         catch(err:any){

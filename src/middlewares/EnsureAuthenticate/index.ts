@@ -15,7 +15,7 @@ class EnsureAuthenticate {
             const secret = String(process.env.SECRET)           
 
             const result = verify(token, secret)
-            request.body.userId = result.sub
+            request.userId = result.sub?.toString() || ""
             next()
 
         }
@@ -41,7 +41,7 @@ class EnsureAuthenticate {
                 throw new Error("User is not an admin")
             }
 
-            request.body.userId = result.sub
+            request.userId = result.sub?.toString() || ""
 
             next()
 

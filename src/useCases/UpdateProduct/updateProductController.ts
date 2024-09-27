@@ -14,7 +14,7 @@ export class CreateProductController{
         try {
             UpdateProductDTO.parse(request.body)
             const data:z.infer<typeof UpdateProductDTO> = request.body
-            const supplier_id = request.body.userId
+            const supplier_id = request.userId
             const { id } = request.params
             const result = await this.updateProductUseCase.execute({
                 ...data

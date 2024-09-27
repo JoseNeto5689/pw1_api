@@ -10,9 +10,9 @@ export class DeletePersonController{
 
     async handle (request: Request, response: Response) {
         try {
-            const id = request.body.userId
+            const id = request.userId
             await this.deletePersonUseCase.execute(id)
-            return response.json("ok")
+            return response.json("Person deleted")
         }
         catch(err:any){
             if(err.issues) {
