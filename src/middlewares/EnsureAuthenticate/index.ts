@@ -20,7 +20,7 @@ class EnsureAuthenticate {
 
         }
         catch (error) {
-            response.status(400).json({ error })
+            response.status(400).json({ error: "Token invalid" })
         }
     }
 
@@ -47,7 +47,7 @@ class EnsureAuthenticate {
 
         }
         catch (error) {
-            response.status(400).json({ error })
+            response.status(400).json({ error: "Token invalid" })
         }
     }
 }
