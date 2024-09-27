@@ -20,7 +20,7 @@ export class ChangePasswordController{
 
             await this.changePasswordUseCase.execute(data.oldPassword,data.newPassword, id)
 
-            return response.json("ok")
+            return response.json("Password changed successfully")
         }
         catch(err:any){
             if(err.issues) {

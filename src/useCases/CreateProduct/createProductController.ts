@@ -12,7 +12,7 @@ export class CreateProductController{
 
     async handle (request: Request, response: Response) {
         try {
-            const id = request.body.userId
+            const id = request.userId
 
             CreateProductDTO.parse(request.body)
 

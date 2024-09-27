@@ -14,7 +14,7 @@ export class CreateProductController{
         try {
             UpdateProductDTO.parse(request.body)
             const data:z.infer<typeof UpdateProductDTO> = request.body
-            const supplier_id = request.body.userId
+            const supplier_id = request.userId
             const { id } = request.params
             const result = await this.updateProductUseCase.execute({
                 ...data
@@ -30,7 +30,8 @@ export class CreateProductController{
                 manufacturing_date: result.manufacturing_date,
                 expiration_date: result.expiration_date,
                 ammount: result.ammount,
-                type: result.type
+                type: result.type,
+                supplier_id: result.supplier_id
             })
         }
         catch(err:any){

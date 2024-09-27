@@ -1,6 +1,7 @@
 export class Supplier {
     public readonly id!: string
     public name!: string
+    public email!: string
     public geolocalization: object | undefined
     public image: string | undefined
     public password!: string

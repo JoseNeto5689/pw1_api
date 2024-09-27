@@ -1,6 +1,7 @@
 export class Person {
     public readonly id!: string
     public name!: string
+    public email!: string
     public address: object | undefined
     public type!: string
     public password!: string

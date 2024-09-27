@@ -5,7 +5,7 @@ import { ISupplierRepository } from "../../repositories/ISupplierRepository"
 
 
 interface IRequest {
-    id: string
+    email: string
     password: string
 }
 
@@ -15,13 +15,15 @@ class AuthenticateSupplier {
     ) { }
     async handle(req: Request, res: Response) {
         try {
-            const { id, password } = <IRequest>req.body
-            const user = await this.supplierRepository.findById(id)
+
+
+            const { email, password } = <IRequest>req.body
+            const user = await this.supplierRepository.findByEmail(email)
 
             console.log(user)
 
             if (!user) {
-                return res.status(401).json({ status: "This id is not registered" })
+                return res.status(401).json({ status: "This email is not registered" })
             }
             const passwordMatch = await bcrypt.compare(password, user.password)
 

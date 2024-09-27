@@ -11,9 +11,9 @@ export class DeleteProductController{
     async handle (request: Request, response: Response) {
         try {
             const { id } = request.params
-            const supplier_id = request.body.userId
+            const supplier_id = request.userId
             await this.deleteProductUseCase.execute(id, supplier_id)
-            return response.json("ok")
+            return response.json("Product deleted")
         }
         catch(err:any){
             if(err.issues) {

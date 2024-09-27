@@ -14,6 +14,7 @@ export class UpdatePersonUseCase {
         const newPerson: Person = {
             id: person.id,
             name: data.name || person.name,
+            email: data.email || person.email,
             address: data.address || person.address,
             type: data.type || person.type,
             contact: data.contact || person.contact,

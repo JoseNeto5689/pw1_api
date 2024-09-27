@@ -1,4 +1,3 @@
-import sequelize from "../../database/index"
 import { Supply } from "../../types/Supply"
 import { ISupplyRepository } from "../ISupplyRepository"
 
