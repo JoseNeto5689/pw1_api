@@ -14,6 +14,11 @@ export class SaveImageUseCase {
             ...supplier,
             image: buffer
         }
+
+        if (!supplier) {
+            throw new Error("Supplier is not found")
+        }
+
         await this.supplierRepository.update(newProduct, id)
         return
     }

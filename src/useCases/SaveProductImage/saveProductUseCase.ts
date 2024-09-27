@@ -14,6 +14,11 @@ export class SaveImageUseCase {
             ...product,
             image
         }
+
+        if(!product) {
+            throw new Error("Products is not found")
+        }
+
         await this.productRepository.update(newProduct, id)
         return
     }
