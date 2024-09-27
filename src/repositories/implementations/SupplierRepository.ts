@@ -44,7 +44,7 @@ export class SupplierRepository implements ISupplierRepository {
         })
     }
 
-    async update(supplier: Supplier, id: string): Promise<unknown> {
+    async update(supplier: any, id: string): Promise<unknown> {
         
         const supplierUpdated = await this.sequelize.models.Supplier.update({
             ...supplier

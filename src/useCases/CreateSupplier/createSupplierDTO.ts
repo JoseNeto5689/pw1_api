@@ -9,7 +9,7 @@ export const CreateSupplierDTO = z.object({
     email: z.string({
         required_error: "Email is required",
         invalid_type_error: "Email must be a string",
-    }),
+    }).email(`Use a valid email`),
     geolocalization: z.object({type: z.string(), coordinates: z.array(z.number()), crs: z.any().optional() }).optional(),
     image: z.string().optional(),
     password: z.string({

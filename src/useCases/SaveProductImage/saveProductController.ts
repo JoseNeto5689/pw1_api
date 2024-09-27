@@ -14,8 +14,8 @@ export class SaveImageController {
         try {
 
             const file: any = req.file
+            console.log(file)
             const imageRef = ref(storage, `pw1/${file?.originalname}`)
-            
             await uploadBytes(imageRef, file.buffer as Blob)
             const downloadURL = await getDownloadURL(imageRef)
             await this.saveImageUseCase.execute(req.params.id, downloadURL)

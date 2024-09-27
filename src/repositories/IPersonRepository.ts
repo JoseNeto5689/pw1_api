@@ -7,5 +7,5 @@ export interface IPersonRepository {
     findByEmail(email: string): Promise<Person | null>
     findByName(name: string): Promise<Person | null>
     remove(id: string): Promise<void>
-    update(person: Person, id: string): Promise<unknown>
+    update(person: any, id: string): Promise<unknown>
 }

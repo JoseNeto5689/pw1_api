@@ -6,7 +6,7 @@ import { findByIdSupplierController } from "../useCases/FindByIdSupplier"
 import { deleteSupplierController } from "../useCases/DeleteSupplier"
 import { updateSupplierController } from "../useCases/UpdateSupplier"
 import EnsureAuthenticate from "../middlewares/EnsureAuthenticate"
-import { saveImageController } from "../useCases/saveSupplierImage"
+import { saveImageController } from "../useCases/SaveSupplierImage"
 import { upload } from "../utils/multer"
 
 const supplierRoutes = (app: Application) => {

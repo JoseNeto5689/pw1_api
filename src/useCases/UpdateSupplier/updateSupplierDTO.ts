@@ -11,6 +11,6 @@ export const UpdateSupplierDTO = z.object({
     }).optional(),
     email: z.string({
         invalid_type_error: "Email must be a string",
-    }).optional()
+    }).email(`Use a valid email`).optional()
 
 })

@@ -22,7 +22,7 @@ export class PersonRepository implements IPersonRepository {
         return person as Person | null
     }
 
-    async update(person: Person, id: string): Promise<unknown> {
+    async update(person: any, id: string): Promise<unknown> {
         const personUpdated = await this.sequelize.models.Person.update({
             ...person
         }, {

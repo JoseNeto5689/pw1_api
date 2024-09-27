@@ -8,7 +8,7 @@ export const CreatePersonDTO = z.object({
     email: z.string({
         required_error: "Email is required",
         invalid_type_error: "Email must be a string",
-    }),
+    }).email(`Use a valid email`),
     address: z.object({type: z.string(), coordinates: z.array(z.number()), crs: z.any().optional() }).optional(),
     type: z.string({
         required_error: "Type is required",

@@ -11,5 +11,5 @@ export const UpdatePersonDTO = z.object({
     contact: z.array(z.string()).optional(),
     email: z.string({
         invalid_type_error: "Email must be a string",
-    }).optional(),
+    }).email(`Use a valid email`).optional(),
 })

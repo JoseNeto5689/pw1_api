@@ -20,11 +20,6 @@ export class ChangePasswordUseCase {
 
         const password = await bcrypt.hash(newPassword, 8)
 
-        const newPerson: Person = {
-            ...person,
-            password
-        }
-
-        await this.personRepository.update(newPerson, id)
+        await this.personRepository.update({password}, id)
     }
 }
